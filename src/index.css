@@ -1,0 +1,107 @@
+/* Brand fonts — Latin + Cyrillic subsets in public/fonts/subset (originals in public/fonts). */
+@font-face {
+  font-family: 'Read';
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/subset/read-light.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Read';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/subset/read-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Read';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/subset/read-medium.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Read';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/subset/read-bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Dacia Block';
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/subset/dacia-block-light.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Dacia Block';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/subset/dacia-block-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Dacia Block';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/subset/dacia-block-bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Dacia Block Extended';
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/subset/dacia-block-extended-light.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Dacia Block Extended';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/subset/dacia-block-extended-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Dacia Block Extended';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/subset/dacia-block-extended-bold.woff2') format('woff2');
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+/* mobile menu: quick view switch */
+@keyframes menu-view-in {
+  from { opacity: 0; transform: translateX(16px); }
+  to { opacity: 1; transform: none; }
+}
+.menu-view { animation: menu-view-in 0.22s ease-out; }
+@media (prefers-reduced-motion: reduce) { .menu-view { animation: none; } }
+
+/* Header height (set at runtime by <SiteHeader>; these are the matching defaults before JS runs). */
+:root { --site-header-h: 57px; }
+@media (min-width: 768px) { :root { --site-header-h: 105px; } }
+@media (min-width: 1280px) { :root { --site-header-h: 81px; } }
+
+/* Hero fills the first screen together with the header: 100dvh - header (100vh fallback without dvh). */
+.hero-h {
+  height: calc(100vh - var(--site-header-h));
+  height: calc(100dvh - var(--site-header-h));
+}
+
+/* model picker: the car slides in from the side the arrow points to */
+@keyframes model-swap-in {
+  from { opacity: 0; transform: translateX(calc(var(--dir, 1) * 16px)); }
+  to { opacity: 1; transform: none; }
+}
+.model-swap { animation: model-swap-in 0.28s ease-out; }
+@media (prefers-reduced-motion: reduce) { .model-swap { animation: none; } }

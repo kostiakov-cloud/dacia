@@ -1,0 +1,74 @@
+{
+  "bigster": {
+    "widths": [
+      400,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 800
+  },
+  "duster": {
+    "widths": [
+      400,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 800
+  },
+  "jogger": {
+    "widths": [
+      400,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 800
+  },
+  "logan-new": {
+    "widths": [
+      400,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 800
+  },
+  "logan": {
+    "widths": [
+      400,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 800
+  },
+  "sandero-stepway-new": {
+    "widths": [
+      400,
+      800,
+      1200
+    ],
+    "width": 1202,
+    "height": 800
+  },
+  "sandero-stepway": {
+    "widths": [
+      400,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 800
+  },
+  "sandero": {
+    "widths": [
+      400,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 800
+  }
+}

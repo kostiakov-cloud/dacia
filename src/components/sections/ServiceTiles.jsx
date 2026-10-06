@@ -4,6 +4,7 @@ import { ServiceTile } from '../ui/molecules/ServiceTile';
 import { SiteButton } from '../ui/atoms/SiteButton';
 import { services as servicesData, servicesCta, servicesButtonLabel } from '../../data/services';
 import { reveal } from '../../reveal';
+import { tr } from '../../i18n';
 
 /**
  * "Сервис и обслуживание": light full-width band, centred heading, 4 service tiles (2×2 on phones, 4 across
@@ -15,9 +16,9 @@ export function ServiceTiles({ items = servicesData, cta = servicesCta, classNam
       <div className="mx-auto max-w-[1280px] px-4 py-12 md:px-8 md:py-16 xl:py-24">
         <header {...reveal()} className="mb-8 text-center md:mb-12">
           <h2 id="services-title" className="font-block text-hs2 text-dacia-text-secondary xl:text-h2">
-            Сервис и обслуживание
+            {tr('Сервис и обслуживание')}
           </h2>
-          <p className="mt-2 text-small text-ink-13 md:text-root">Техническое обслуживание и ремонт</p>
+          <p className="mt-2 text-small text-ink-13 md:text-root">{tr('Техническое обслуживание и ремонт')}</p>
         </header>
 
         <div className="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-4 xl:gap-8">

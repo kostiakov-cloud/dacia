@@ -1,6 +1,7 @@
 import React from 'react';
 import { cn } from '../utils';
 import { ChevronLeftIcon, ChevronRightIcon } from '../atoms/SliderChevrons';
+import { tr } from '../../../i18n';
 
 const pad = (n) => String(n).padStart(2, '0');
 
@@ -52,7 +53,7 @@ export function SliderControls({ index, count, onPrev, onNext, onDot, tone = 'li
   );
   return (
     <div className={cn('flex items-center font-medium', s.gap, s.text, light ? 'text-surface-01' : 'text-dacia-text-secondary', className)}>
-      <button type="button" aria-label="Предыдущий слайд" onClick={onPrev} className={arrow}>
+      <button type="button" aria-label={tr('Предыдущий слайд')} onClick={onPrev} className={arrow}>
         <ChevronLeftIcon size={s.icon} />
       </button>
       <span className="tabular-nums" aria-live="off">
@@ -63,7 +64,7 @@ export function SliderControls({ index, count, onPrev, onNext, onDot, tone = 'li
           <button
             key={i}
             type="button"
-            aria-label={`Слайд ${i + 1}`}
+            aria-label={tr('Слайд {n0}', { n0: i + 1 })}
             aria-current={i === index}
             onClick={() => onDot?.(i)}
             className={cn(s.dotBtn, 'flex items-center justify-center focus:outline-none focus-visible:ring-2', light ? 'focus-visible:ring-surface-01' : 'focus-visible:ring-dacia-dark-green')}
@@ -72,7 +73,7 @@ export function SliderControls({ index, count, onPrev, onNext, onDot, tone = 'li
           </button>
         ))}
       </div>
-      <button type="button" aria-label="Следующий слайд" onClick={onNext} className={arrow}>
+      <button type="button" aria-label={tr('Следующий слайд')} onClick={onNext} className={arrow}>
         <ChevronRightIcon size={s.icon} />
       </button>
     </div>

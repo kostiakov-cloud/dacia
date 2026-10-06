@@ -5,13 +5,14 @@ import { ConsentBlock } from '../molecules/ConsentBlock';
 import { FormSuccess } from '../molecules/FormSuccess';
 import { SiteButton } from '../atoms/SiteButton';
 import * as val from '../../../lib/validators';
+import { tr } from '../../../i18n';
 
 const rules = {
   email: (v, f) => (f.required || v.trim() ? val.email(v) : ''),
   tel: (v, f) => (f.required || v.trim() ? val.phone(v) : ''),
-  text: (v, f) => (f.required ? val.required(v, f.error || `Заполните поле «${f.label}»`) : ''),
-  select: (v, f) => (f.required ? val.required(v, f.error || `Выберите: ${f.label}`) : ''),
-  textarea: (v, f) => (f.required ? val.required(v, f.error || `Заполните поле «${f.label}»`) : ''),
+  text: (v, f) => (f.required ? val.required(v, f.error || tr('Заполните поле «{label}»', { label: f.label })) : ''),
+  select: (v, f) => (f.required ? val.required(v, f.error || tr('Выберите: {label}', { label: f.label })) : ''),
+  textarea: (v, f) => (f.required ? val.required(v, f.error || tr('Заполните поле «{label}»', { label: f.label })) : ''),
 };
 
 /**
@@ -19,7 +20,7 @@ const rules = {
  * dedicated forms: validation on submit (live afterwards), focus on the first error, `onSubmit(values)` hook, success panel.
  * fields: [{ name, label, type: text|email|tel|select|textarea, required, placeholder, options?, cols? (grid span at md: 1-3) }]
  */
-export function RequestForm({ fields, consentText = [], submitLabel = 'Отправить', successText, successHref = '/', successLabel = 'На главную', onSubmit, columns = 2, className }) {
+export function RequestForm({ fields, consentText = [], submitLabel = tr('Отправить'), successText, successHref = '/', successLabel = tr('На главную'), onSubmit, columns = 2, className }) {
   const init = Object.fromEntries(fields.map((f) => [f.name, f.defaultValue ?? '']));
   const [v, setV] = React.useState({ ...init, consent: false });
   const [errors, setErrors] = React.useState({});
@@ -32,7 +33,7 @@ export function RequestForm({ fields, consentText = [], submitLabel = 'Отпр�
       const msg = (rules[f.type] || rules.text)(values[f.name] ?? '', f);
       if (msg) e[f.name] = msg;
     });
-    if (!values.consent) e.consent = 'Необходимо согласие на обработку данных';
+    if (!values.consent) e.consent = tr('Необходимо согласие на обработку данных');
     return e;
   };
 

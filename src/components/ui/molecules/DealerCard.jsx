@@ -2,6 +2,7 @@ import React from 'react';
 import { AtSign, Clock, MapPin, Phone } from 'lucide-react';
 import { cn } from '../utils';
 import { SiteButton } from '../atoms/SiteButton';
+import { tr } from '../../../i18n';
 
 const Row = ({ icon: Icon, children }) => (
   <li className="flex items-start gap-3 text-small font-light text-ink-13">
@@ -15,7 +16,7 @@ export function DealerCard({ id, name, address, phones = [], email, hours, servi
   return (
     <article id={id} {...rest} className={cn('scroll-mt-28 rounded-cr2 border border-alpha-d-10 bg-surface-03 p-6 md:p-8 xl:scroll-mt-24', className)}>
       <h2 className="font-block text-hs5 text-dacia-text-secondary xl:text-h5">{name}</h2>
-      <ul className="mt-3 flex flex-wrap gap-2" aria-label="Услуги дилера">
+      <ul className="mt-3 flex flex-wrap gap-2" aria-label={tr('Услуги дилера')}>
         {services.map((s) => (
           <li key={s} className="rounded-cr2 border border-alpha-d-5 bg-surface-01 px-2.5 py-0.5 text-caption font-medium text-dacia-text-secondary">{s}</li>
         ))}
@@ -34,8 +35,8 @@ export function DealerCard({ id, name, address, phones = [], email, hours, servi
         <Row icon={Clock}>{hours}</Row>
       </ul>
       <div className="mt-6 grid grid-cols-2 gap-3">
-        <SiteButton href="/service-booking" variant="solid" size="m" className="px-3">Записаться на ТО</SiteButton>
-        <SiteButton href={map} variant="outline" size="m" className="px-3" target="_blank" rel="noopener noreferrer">Маршрут</SiteButton>
+        <SiteButton href="/service-booking" variant="solid" size="m" className="px-3">{tr('Записаться на ТО')}</SiteButton>
+        <SiteButton href={map} variant="outline" size="m" className="px-3" target="_blank" rel="noopener noreferrer">{tr('Маршрут')}</SiteButton>
       </div>
     </article>
   );

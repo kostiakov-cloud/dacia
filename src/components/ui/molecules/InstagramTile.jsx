@@ -2,6 +2,7 @@ import React from 'react';
 import { Play } from 'lucide-react';
 import { cn } from '../utils';
 import instagramIcon from '../../../assets/footer/instagram.svg';
+import { tr } from '../../../i18n';
 
 /**
  * Portrait (4:5) Instagram post tile: photo (gradient placeholder without `image`), on hover / keyboard focus a dark veil
@@ -13,7 +14,7 @@ export function InstagramTile({ href = '#', alt = '', image, video = false, clas
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`${alt} (открыть в Instagram)`}
+      aria-label={tr('{alt} (открыть в Instagram)', { alt })}
       {...rest}
       className={cn(
         'group relative isolate block aspect-[4/5] overflow-hidden bg-ink-18 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-surface-01',

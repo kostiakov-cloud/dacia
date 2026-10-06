@@ -13,6 +13,7 @@ import instagram from '../../assets/footer/instagram.svg';
 import youtube from '../../assets/footer/youtube.svg';
 import tiktok from '../../assets/footer/tiktok.svg';
 import logoSign from '../../assets/footer/logo-sign.svg';
+import { tr } from '../../i18n';
 
 /** Wraps an exported Figma SVG as an icon component (`size` prop, like lucide). */
 const img = (src, name, defaultSize) => {
@@ -35,40 +36,40 @@ const TiktokIcon = img(tiktok, 'TiktokIcon', 20);
 
 /* ---- Default content (mirrors the Figma screenshot) ---- */
 const defaultBenefits = [
-  { icon: LifebuoyIcon, text: 'Круглосуточная помощь 24/7' },
-  { icon: ReloadIcon, text: 'Трейд-ин: обновление старой DACIA на новую' },
-  { icon: ShieldTickIcon, text: 'Управляйте автомобилем уверенно благодаря гарантии DACIA' },
-  { icon: SteeringWheelIcon, text: 'Тест-драйв: протестируйте автомобиль на ваш выбор' },
+  { icon: LifebuoyIcon, text: tr('Круглосуточная помощь 24/7') },
+  { icon: ReloadIcon, text: tr('Трейд-ин: обновление старой DACIA на новую') },
+  { icon: ShieldTickIcon, text: tr('Управляйте автомобилем уверенно благодаря гарантии DACIA') },
+  { icon: SteeringWheelIcon, text: tr('Тест-драйв: протестируйте автомобиль на ваш выбор') },
 ];
 
 const defaultColumns = [
   {
     // first column: brand tagline + links (no heading)
-    tagline: 'Откройте для себя марку Dacia',
+    tagline: tr('Откройте для себя марку Dacia'),
     taglineHref: '/about',
     links: [
-      { label: 'Контакты', href: '/contacts' },
-      { label: 'Дилеры', href: '/dealers' },
-      { label: 'Корпоративные продажи', href: '/corporate' },
+      { label: tr('Контакты'), href: '/contacts' },
+      { label: tr('Дилеры'), href: '/dealers' },
+      { label: tr('Корпоративные продажи'), href: '/corporate' },
     ],
     logo: true,
   },
   {
-    title: 'Пользователям Dacia',
+    title: tr('Пользователям Dacia'),
     links: [
-      { label: 'Гарантия', href: '/warranty' },
-      { label: 'Поддержка', href: '/faq' },
-      { label: 'Скачать цены', href: '/price-list' },
-      { label: 'Новости', href: '/news' },
+      { label: tr('Гарантия'), href: '/warranty' },
+      { label: tr('Поддержка'), href: '/faq' },
+      { label: tr('Скачать цены'), href: '/price-list' },
+      { label: tr('Новости'), href: '/news' },
     ],
   },
   {
-    title: 'Автомобили Dacia',
+    title: tr('Автомобили Dacia'),
     links: [
-      { label: 'Модельный ряд Dacia', href: '/models' },
-      { label: 'Трейд-ин', href: '/trade-in' },
-      { label: 'Финансирование', href: '/financing' },
-      { label: 'Тест-драйв', href: '/test-drive' },
+      { label: tr('Модельный ряд Dacia'), href: '/models' },
+      { label: tr('Трейд-ин'), href: '/trade-in' },
+      { label: tr('Финансирование'), href: '/financing' },
+      { label: tr('Тест-драйв'), href: '/test-drive' },
     ],
   },
 ];
@@ -81,10 +82,10 @@ const defaultSocials = [
 ];
 
 const defaultLegal = [
-  { label: 'Обработка персональных данных', href: '/privacy' },
-  { label: 'Юридическая информация', href: '/legal' },
+  { label: tr('Обработка персональных данных'), href: '/privacy' },
+  { label: tr('Юридическая информация'), href: '/legal' },
   { label: 'Cookies', href: '#cookies', action: 'cookies' },
-  { label: 'Доступность', href: '/accessibility' },
+  { label: tr('Доступность'), href: '/accessibility' },
 ];
 
 const linkClass =
@@ -118,8 +119,8 @@ export const Footer = React.forwardRef(({
   ...props
 }, ref) => {
   const sub = subscribe === false ? null : {
-    title: 'Подпишитесь на Dacia',
-    placeholder: 'Ваш email для рассылки',
+    title: tr('Подпишитесь на Dacia'),
+    placeholder: tr('Ваш email для рассылки'),
     ...subscribe,
   };
   const [email, setEmail] = React.useState('');
@@ -183,7 +184,7 @@ export const Footer = React.forwardRef(({
                       placeholder={sub.placeholder}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      action={{ icon: SendIcon, type: 'submit', 'aria-label': 'Подписаться' }}
+                      action={{ icon: SendIcon, type: 'submit', 'aria-label': tr('Подписаться') }}
                     />
                   </form>
                 </>

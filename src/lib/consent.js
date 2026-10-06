@@ -1,3 +1,4 @@
+import { tr } from '../i18n';
 /**
  * Cookie consent storage. One JSON value in localStorage: { v, ts, categories: { functional: true, marketing, preferences,
  * measurement, other, social } }. `functional` is always on. Reads / writes never throw (private mode, blocked storage).
@@ -8,12 +9,12 @@ export const CONSENT_EVENT = 'app:consent-change';
 export const OPEN_CONSENT_EVENT = 'app:open-consent';
 
 export const consentCategories = [
-  { id: 'functional', label: 'Функция', locked: true },
-  { id: 'marketing', label: 'Маркетинг' },
-  { id: 'preferences', label: 'Предпочтения' },
-  { id: 'measurement', label: 'Измерение' },
-  { id: 'other', label: 'Другие' },
-  { id: 'social', label: 'Соцсети' },
+  { id: 'functional', label: tr('Функция'), locked: true },
+  { id: 'marketing', label: tr('Маркетинг') },
+  { id: 'preferences', label: tr('Предпочтения') },
+  { id: 'measurement', label: tr('Измерение') },
+  { id: 'other', label: tr('Другие') },
+  { id: 'social', label: tr('Соцсети') },
 ];
 
 export function getConsent() {

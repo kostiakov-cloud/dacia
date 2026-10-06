@@ -3,6 +3,7 @@ import { Check } from 'lucide-react';
 import { PageBand } from '../ui/molecules/PageBand';
 import { SiteButton } from '../ui/atoms/SiteButton';
 import { reveal } from '../../reveal';
+import { tr } from '../../i18n';
 
 /** Text page: title band, a sticky "on this page" list (xl) and the sections (Heading H5 titles, Light body text, lists, CTA). */
 export function ContentPage({ page }) {
@@ -10,7 +11,7 @@ export function ContentPage({ page }) {
     <>
       <PageBand title={page.title} subtitle={page.subtitle} />
       <div className="mx-auto grid max-w-[1280px] gap-10 px-4 py-10 md:px-8 md:py-14 xl:grid-cols-[240px_1fr] xl:gap-16 xl:py-16">
-        <nav aria-label="На этой странице" className="hidden xl:block">
+        <nav aria-label={tr('На этой странице')} className="hidden xl:block">
           <ul className="sticky top-28 flex flex-col gap-3 border-l border-alpha-d-10 pl-4 text-small">
             {page.sections.map((s) => (
               <li key={s.id}>

@@ -2,6 +2,7 @@ import React from 'react';
 import { ServiceFeature } from '../ui/molecules/ServiceFeature';
 import { serviceSections, servicesIntro } from '../../data/services-page';
 import { reveal } from '../../reveal';
+import { tr } from '../../i18n';
 
 /**
  * /services: light header band (title + anchor chips that scroll to each block) and the four service blocks, the
@@ -15,7 +16,7 @@ export function ServicesPage({ sections = serviceSections, intro = servicesIntro
           <h1 id="services-page-title" className="font-block text-hs2 text-dacia-text-secondary xl:text-h2">
             {intro.title}
           </h1>
-          <nav aria-label="Разделы" className="mt-4 flex flex-wrap items-center justify-center gap-2 md:mt-[21px]">
+          <nav aria-label={tr('Разделы')} className="mt-4 flex flex-wrap items-center justify-center gap-2 md:mt-[21px]">
             {sections.map((s) => (
               <a
                 key={s.id}

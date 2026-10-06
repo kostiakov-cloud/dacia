@@ -8,19 +8,20 @@ import * as val from '../../lib/validators';
 import { SiteButton } from '../ui/atoms/SiteButton';
 import { bookingCommentMax, bookingConsentText, bookingDealers, bookingServiceByKey, bookingServices } from '../../data/booking';
 import { reveal } from '../../reveal';
+import { tr } from '../../i18n';
 
 const empty = { dealer: '', lastName: '', firstName: '', email: '', phone: '', model: '', plate: '', vin: '', services: [], comment: '', consent: false };
 
 function validate(v) {
   return val.collect({
-    firstName: val.required(v.firstName, 'Введите имя'),
+    firstName: val.required(v.firstName, tr('Введите имя')),
     email: val.email(v.email),
     phone: val.phone(v.phone),
-    model: val.required(v.model, 'Укажите модель'),
-    plate: val.required(v.plate, 'Укажите регистрационный номер'),
+    model: val.required(v.model, tr('Укажите модель')),
+    plate: val.required(v.plate, tr('Укажите регистрационный номер')),
     vin: val.vin(v.vin),
-    services: v.services.length ? '' : 'Выберите хотя бы один сервис',
-    consent: v.consent ? '' : 'Необходимо согласие на обработку данных',
+    services: v.services.length ? '' : tr('Выберите хотя бы один сервис'),
+    consent: v.consent ? '' : tr('Необходимо согласие на обработку данных'),
   });
 }
 
@@ -67,51 +68,51 @@ export function ServiceBookingForm({ onSubmit, className }) {
   };
 
   if (done) {
-    return <FormSuccess backHref="/services" backLabel="Вернуться к сервисам" />;
+    return <FormSuccess backHref="/services" backLabel={tr('Вернуться к сервисам')} />;
   }
 
   return (
-    <form ref={formRef} noValidate onSubmit={submit} aria-label="Запись на техническое обслуживание" className={className}>
+    <form ref={formRef} noValidate onSubmit={submit} aria-label={tr('Запись на техническое обслуживание')} className={className}>
       <div className="mx-auto flex max-w-[1280px] flex-col gap-10 px-4 py-10 md:px-8 md:py-14 xl:py-16">
         <div {...reveal()} className="grid gap-4 md:grid-cols-3">
-          <Select label="Дилер" name="dealer" placeholder="Выберите дилера" options={bookingDealers} value={v.dealer} onChange={set('dealer')} />
+          <Select label={tr('Дилер')} name="dealer" placeholder={tr('Выберите дилера')} options={bookingDealers} value={v.dealer} onChange={set('dealer')} />
         </div>
 
         <fieldset {...reveal()} className="m-0 min-w-0 border-0 p-0">
-          <legend className={`${groupTitle} mb-5 p-0`}>Персональные данные</legend>
+          <legend className={`${groupTitle} mb-5 p-0`}>{tr('Персональные данные')}</legend>
           <div className="grid gap-x-4 gap-y-5 md:grid-cols-3">
-            <Input size="l" label="Фамилия" name="lastName" autoComplete="family-name" placeholder="Ваша фамилия" value={v.lastName} onChange={set('lastName')} />
-            <Input size="l" label="Имя *" name="firstName" autoComplete="given-name" placeholder="Ваше имя" value={v.firstName} onChange={set('firstName')} error={!!errors.firstName} errorMessage={errors.firstName} />
+            <Input size="l" label={tr('Фамилия')} name="lastName" autoComplete="family-name" placeholder={tr('Ваша фамилия')} value={v.lastName} onChange={set('lastName')} />
+            <Input size="l" label={tr('Имя *')} name="firstName" autoComplete="given-name" placeholder={tr('Ваше имя')} value={v.firstName} onChange={set('firstName')} error={!!errors.firstName} errorMessage={errors.firstName} />
             <span className="hidden md:block" aria-hidden />
-            <Input size="l" label="Электронная почта *" name="email" type="email" autoComplete="email" placeholder="example@mail.com" value={v.email} onChange={set('email')} error={!!errors.email} errorMessage={errors.email} />
-            <Input size="l" label="Номер телефона *" name="phone" type="tel" autoComplete="tel" inputMode="tel" placeholder="+44 7700 900123" value={v.phone} onChange={set('phone')} error={!!errors.phone} errorMessage={errors.phone} />
+            <Input size="l" label={tr('Электронная почта *')} name="email" type="email" autoComplete="email" placeholder="example@mail.com" value={v.email} onChange={set('email')} error={!!errors.email} errorMessage={errors.email} />
+            <Input size="l" label={tr('Номер телефона *')} name="phone" type="tel" autoComplete="tel" inputMode="tel" placeholder="+44 7700 900123" value={v.phone} onChange={set('phone')} error={!!errors.phone} errorMessage={errors.phone} />
           </div>
         </fieldset>
 
         <fieldset {...reveal()} className="m-0 min-w-0 border-0 p-0">
-          <legend className={`${groupTitle} mb-5 p-0`}>Автомобиль</legend>
+          <legend className={`${groupTitle} mb-5 p-0`}>{tr('Автомобиль')}</legend>
           <div className="grid gap-x-4 gap-y-5 md:grid-cols-3">
-            <Input size="l" label="Модель *" name="model" placeholder="напр. Dacia Duster" value={v.model} onChange={set('model')} error={!!errors.model} errorMessage={errors.model} />
-            <Input size="l" label="Регистрационный номер *" name="plate" autoCapitalize="characters" placeholder="напр. ABC 123" value={v.plate} onChange={set('plate')} error={!!errors.plate} errorMessage={errors.plate} />
-            <Input size="l" label="Номер кузова (VIN) *" name="vin" autoCapitalize="characters" maxLength={17} placeholder="напр. UU11234567890ABCD" value={v.vin} onChange={(e) => set('vin')(e.target.value.toUpperCase())} error={!!errors.vin} errorMessage={errors.vin} />
+            <Input size="l" label={tr('Модель *')} name="model" placeholder={tr('напр. Dacia Duster')} value={v.model} onChange={set('model')} error={!!errors.model} errorMessage={errors.model} />
+            <Input size="l" label={tr('Регистрационный номер *')} name="plate" autoCapitalize="characters" placeholder={tr('напр. ABC 123')} value={v.plate} onChange={set('plate')} error={!!errors.plate} errorMessage={errors.plate} />
+            <Input size="l" label={tr('Номер кузова (VIN) *')} name="vin" autoCapitalize="characters" maxLength={17} placeholder={tr('напр. UU11234567890ABCD')} value={v.vin} onChange={(e) => set('vin')(e.target.value.toUpperCase())} error={!!errors.vin} errorMessage={errors.vin} />
           </div>
         </fieldset>
 
         <fieldset {...reveal()} className="m-0 min-w-0 border-0 p-0">
-          <legend className={`${groupTitle} mb-5 p-0`}>Дополнительно</legend>
+          <legend className={`${groupTitle} mb-5 p-0`}>{tr('Дополнительно')}</legend>
           <div className="flex flex-col gap-5">
             <div data-field="services" tabIndex={-1} className="outline-none">
-              <MultiSelect label="Сервисы *" options={bookingServices} value={v.services} onChange={set('services')} error={!!errors.services} errorMessage={errors.services} />
+              <MultiSelect label={tr('Сервисы *')} options={bookingServices} value={v.services} onChange={set('services')} error={!!errors.services} errorMessage={errors.services} />
             </div>
             <div>
               <Input
                 size="l"
                 multiline
                 showScrollbar={false}
-                label="Дополнительная информация"
+                label={tr('Дополнительная информация')}
                 name="comment"
                 maxLength={bookingCommentMax}
-                placeholder="Ваш комментарий или пожелания к записи..."
+                placeholder={tr('Ваш комментарий или пожелания к записи...')}
                 value={v.comment}
                 onChange={set('comment')}
               />
@@ -123,13 +124,13 @@ export function ServiceBookingForm({ onSubmit, className }) {
         </fieldset>
 
         <fieldset {...reveal()} className="m-0 min-w-0 border-0 p-0">
-          <legend className={`${groupTitle} mb-5 p-0`}>Валидация</legend>
+          <legend className={`${groupTitle} mb-5 p-0`}>{tr('Валидация')}</legend>
           <ConsentBlock text={bookingConsentText} checked={v.consent} onChange={set('consent')} error={errors.consent} />
         </fieldset>
 
         <div {...reveal()}>
           <SiteButton type="submit" variant="solid" size="l" className="max-md:w-full">
-            Отправить заявку на ТО
+            {tr('Отправить заявку на ТО')}
           </SiteButton>
         </div>
       </div>

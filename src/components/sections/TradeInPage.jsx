@@ -2,6 +2,7 @@ import React from 'react';
 import { TradeInForm } from './TradeInForm';
 import { tradeInHero, tradeInInfo } from '../../data/tradein';
 import { reveal } from '../../reveal';
+import { tr } from '../../i18n';
 
 /**
  * /trade-in: hero (sky -> wall gradient with the "new car peeling off the old one" cut-out sitting on the bottom edge),
@@ -32,7 +33,7 @@ export function TradeInPage({ hero = tradeInHero, info = tradeInInfo }) {
         />
       </section>
 
-      <section aria-label="Информация о программе" className="border-b border-alpha-d-3 bg-surface-03">
+      <section aria-label={tr('Информация о программе')} className="border-b border-alpha-d-3 bg-surface-03">
         <div className="mx-auto grid max-w-[1280px] gap-10 px-4 py-12 md:grid-cols-2 md:gap-16 md:px-8 md:py-16 xl:py-20">
           {info.map((b, i) => (
             <div key={b.title} {...reveal('up', i * 100)}>

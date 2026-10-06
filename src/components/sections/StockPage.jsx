@@ -7,31 +7,32 @@ import { SiteButton } from '../ui/atoms/SiteButton';
 import { models } from '../../data/models';
 import { stockCars, stockCities } from '../../data/stock';
 import { reveal } from '../../reveal';
+import { formatNumber, tr } from '../../i18n';
 
-const fmt = (n) => `${new Intl.NumberFormat('ru-RU').format(n).replace(/ /g, ' ')} €`;
+const fmt = (n) => `${formatNumber(n)} €`;
 
 /** /stock: city chips + model select + cards of cars in stock (placeholder data). `?model=<id>` preselects a model. */
 export function StockPage() {
-  const [city, setCity] = React.useState('Все');
+  const [city, setCity] = React.useState(tr('Все'));
   const [model, setModel] = React.useState(() => {
     const q = new URLSearchParams(window.location.search).get('model') || '';
     return models.some((m) => m.id === q) ? q : '';
   });
-  const shown = stockCars.filter((c) => (city === 'Все' || c.city === city) && (!model || c.model === model));
+  const shown = stockCars.filter((c) => (city === tr('Все') || c.city === city) && (!model || c.model === model));
   return (
     <>
-      <PageBand title="Авто в наличии" subtitle="Автомобили Dacia, готовые к выдаче у наших дилеров">
+      <PageBand title={tr('Авто в наличии')} subtitle={tr('Автомобили Dacia, готовые к выдаче у наших дилеров')}>
         <div className="mx-auto mt-6 flex max-w-[560px] flex-col items-center gap-4 md:mt-8">
-          <FilterChips label="Город" value={city} onChange={setCity} options={stockCities.map((c) => ({ value: c, label: c }))} className="justify-center" />
-          <Select label="Модель" placeholder="Все модели" value={model} onChange={(e) => setModel(e.target.value)} options={models.map((m) => m.id)} optionLabels={Object.fromEntries(models.map((m) => [m.id, m.name]))} />
+          <FilterChips label={tr('Город')} value={city} onChange={setCity} options={stockCities.map((c) => ({ value: c, label: c }))} className="justify-center" />
+          <Select label={tr('Модель')} placeholder={tr('Все модели')} value={model} onChange={(e) => setModel(e.target.value)} options={models.map((m) => m.id)} optionLabels={Object.fromEntries(models.map((m) => [m.id, m.name]))} />
         </div>
       </PageBand>
       <div className="mx-auto max-w-[1280px] px-4 py-10 md:px-8 md:py-14 xl:py-16">
-        <p className="sr-only" aria-live="polite">Найдено автомобилей: {shown.length}</p>
+        <p className="sr-only" aria-live="polite">{tr('Найдено автомобилей:')} {shown.length}</p>
         {shown.length === 0 ? (
           <div className="py-10 text-center">
-            <p className="text-root text-ink-13">По выбранным условиям автомобилей нет.</p>
-            <SiteButton href="/offer-request" className="mt-6 max-md:w-full">Получить предложение</SiteButton>
+            <p className="text-root text-ink-13">{tr('По выбранным условиям автомобилей нет.')}</p>
+            <SiteButton href="/offer-request" className="mt-6 max-md:w-full">{tr('Получить предложение')}</SiteButton>
           </div>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-3">
@@ -43,10 +44,10 @@ export function StockPage() {
                   <h2 className="mt-4 font-block text-hs6 text-dacia-text-secondary xl:text-h6">{m.name} {c.trim}</h2>
                   <p className="mt-1 text-small font-light text-ink-13">{c.engine} · {c.color} · {c.year}</p>
                   <p className="mt-1 text-small font-light text-ink-13">{c.city}</p>
-                  <p className="mt-3 text-root text-ink-13">Цена <span className="font-medium text-dacia-text-secondary">{fmt(c.price)}</span></p>
+                  <p className="mt-3 text-root text-ink-13">{tr('Цена')} <span className="font-medium text-dacia-text-secondary">{fmt(c.price)}</span></p>
                   <div className="mt-5 grid grid-cols-2 gap-2">
-                    <SiteButton href={`/offer-request?model=${c.model}`} className="px-2">Запросить</SiteButton>
-                    <SiteButton href="/test-drive" variant="outline" className="px-2">Тест-драйв</SiteButton>
+                    <SiteButton href={`/offer-request?model=${c.model}`} className="px-2">{tr('Запросить')}</SiteButton>
+                    <SiteButton href="/test-drive" variant="outline" className="px-2">{tr('Тест-драйв')}</SiteButton>
                   </div>
                 </article>
               );

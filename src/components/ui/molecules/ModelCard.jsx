@@ -2,6 +2,7 @@ import React from 'react';
 import { cn } from '../utils';
 import { SiteButton } from '../atoms/SiteButton';
 import { ModelImage } from '../atoms/ModelImage';
+import { tr } from '../../../i18n';
 
 /**
  * Car card: image, "Новый" label, name, price, version, optional hybrid tag.
@@ -33,18 +34,18 @@ export function ModelCard({ id, name, isNew, image, price, version, hybrid, href
           />
         </div>
         <div className={`mt-3 flex h-5 items-end text-hx6 font-bold uppercase tracking-wider text-dacia-text-secondary ${actions ? 'font-display' : 'font-block'}`}>
-          {isNew && 'Новый'}
+          {isNew && tr('Новый')}
         </div>
         <h3 className={`text-hx5 font-bold uppercase tracking-wider text-dacia-text-secondary ${actions ? 'font-display' : 'font-block'}`}>{name}</h3>
         <p className="mt-2 text-small font-light text-ink-13">
-          Цена от <span className="font-medium text-dacia-text-secondary">{price}</span>
+          {tr('Цена от')} <span className="font-medium text-dacia-text-secondary">{price}</span>
         </p>
         <p className="text-caption font-light text-dacia-text-secondary">{version}</p>
         <div className="mt-2 flex h-5 items-center gap-2 text-tiny">
           {hybrid && (
             <>
-              <span className="font-light text-ink-13">Доступен:</span>
-              <span className="rounded-cr2 border border-dacia-orange px-1.5 font-medium text-dacia-orange">Полный гибрид</span>
+              <span className="font-light text-ink-13">{tr('Доступен:')}</span>
+              <span className="rounded-cr2 border border-dacia-orange px-1.5 font-medium text-dacia-orange">{tr('Полный гибрид')}</span>
             </>
           )}
         </div>
@@ -53,10 +54,10 @@ export function ModelCard({ id, name, isNew, image, price, version, hybrid, href
       {actions && (
         <div className="mt-4 hidden w-full grid-cols-2 gap-2 opacity-0 transition-opacity duration-200 group-focus-within:opacity-100 group-hover:opacity-100 [@media(hover:hover)]:grid">
           <SiteButton href={href} variant="solid" className="px-2">
-            Подробнее
+            {tr('Подробнее')}
           </SiteButton>
           <SiteButton href={configHref} variant="outline" className="px-2">
-            Конфигуратор
+            {tr('Конфигуратор')}
           </SiteButton>
         </div>
       )}

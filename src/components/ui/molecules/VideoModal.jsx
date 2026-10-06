@@ -2,6 +2,7 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 import { cn } from '../utils';
+import { tr } from '../../../i18n';
 
 /** Extracts the 11-char YouTube id from a watch / youtu.be / embed / shorts URL (or returns a bare id). */
 export function youtubeId(url = '') {
@@ -14,7 +15,7 @@ export function youtubeId(url = '') {
  * youtube-nocookie domain, autoplay), so the page itself loads no YouTube code. Esc / backdrop / X close it,
  * body scroll is locked and focus returns to the opener.
  */
-export function VideoModal({ open, url, title = 'Видео', onClose }) {
+export function VideoModal({ open, url, title = tr('Видео'), onClose }) {
   const id = youtubeId(url);
   const closeRef = React.useRef(null);
   const opener = React.useRef(null);
@@ -50,7 +51,7 @@ export function VideoModal({ open, url, title = 'Видео', onClose }) {
       <button
         ref={closeRef}
         type="button"
-        aria-label="Закрыть видео"
+        aria-label={tr('Закрыть видео')}
         onClick={onClose}
         className="absolute right-4 top-4 flex size-10 items-center justify-center text-surface-01 transition-opacity hover:opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-surface-01 md:right-8 md:top-8"
       >

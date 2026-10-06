@@ -3,6 +3,7 @@ import { cn } from '../utils';
 import { Avatar } from '../atoms/Avatar';
 import { Stars } from '../atoms/Stars';
 import { ChevronDownIcon, ChevronUpIcon } from '../atoms/SliderChevrons';
+import { tr } from '../../../i18n';
 
 /**
  * Review card: white, 1px border. Desktop = avatar left of name + stars, text below (indented under the name);
@@ -50,7 +51,7 @@ export function ReviewCard({ name, rating, avatar, text, onExpandedChange, class
             }}
             className="mt-3 inline-flex items-center gap-1 text-small font-medium text-dacia-text-secondary transition-colors hover:text-dacia-dark-green focus:outline-none focus-visible:ring-2 focus-visible:ring-dacia-dark-green"
           >
-            {open ? 'Свернуть' : 'Развернуть'}
+            {open ? tr('Свернуть') : tr('Развернуть')}
             {open ? <ChevronUpIcon size={20} /> : <ChevronDownIcon size={20} />}
           </button>
         )}

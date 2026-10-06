@@ -1,6 +1,7 @@
 import React from 'react';
 import { cn } from '../utils';
 import { OnDarkButton } from '../atoms/OnDarkButton';
+import { tr } from '../../../i18n';
 
 // children of the hover panel: start 20px lower and transparent, settle with a long expo-out curve
 const rise =
@@ -12,7 +13,7 @@ const rise =
  * "Записаться на ТО" button. The whole tile stays one big link (the panel lets clicks through except the button),
  * so on touch screens a tap simply opens `href`.
  */
-export function ServiceTile({ title, text, href = '#', bookingHref = '/service-booking', image, buttonLabel = 'Записаться на ТО', className, id: _id, ...rest }) {
+export function ServiceTile({ title, text, href = '#', bookingHref = '/service-booking', image, buttonLabel = tr('Записаться на ТО'), className, id: _id, ...rest }) {
   return (
     <article {...rest} className={cn('group relative isolate aspect-square overflow-hidden rounded-cr2 bg-ink-18 text-surface-01', className)}>
       {image ? (

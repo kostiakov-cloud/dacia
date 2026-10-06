@@ -1,3 +1,4 @@
+import { tr } from '../i18n';
 /**
  * News cards for the home page. `layout` (desktop, 2-column grid, 280px rows):
  *   'text-image' - text + 280px photo on the right;  'text' - text only;  'image' - photo only;
@@ -14,8 +15,8 @@ export const news = [
     id: 'premiere-suv',
     layout: 'text-image',
     show: 'all',
-    title: 'Премьера, которая меняет правила игры в сегменте доступных SUV',
-    text: 'В 2025 году Dacia представляет премьеру даже по меркам мировой автомобильной индустрии: запускает первую в мире систему, которая делает автомобиль ещё доступнее.',
+    title: tr('Премьера, которая меняет правила игры в сегменте доступных SUV'),
+    text: tr('В 2025 году Dacia представляет премьеру даже по меркам мировой автомобильной индустрии: запускает первую в мире систему, которая делает автомобиль ещё доступнее.'),
     href: '/news/premiere-suv',
     image: { src: '/images/news-premiere-600.webp', srcSet: '/images/news-premiere-600.webp 600w' },
     imageClass: 'object-[58%_50%]',
@@ -24,7 +25,7 @@ export const news = [
     id: 'new-generation',
     layout: 'text',
     show: 'xl',
-    title: 'Новое поколение Dacia',
+    title: tr('Новое поколение Dacia'),
     text: 'Lorem ipsum dolor sit amet consectetur adipiscing elit quisque suscipit tellus interdum lacus id, pellentesque ac turpis massa dictum netus tempus urna felis aliquam sociis. Ut imperdiet semper nostra bibendum tortor eu, molestie justo at quam fermentum, sodales magnis placerat aptent vehicula.',
     href: '/news/new-generation',
     image: null,
@@ -34,8 +35,8 @@ export const news = [
     layout: 'text-image',
     show: 'xl',
     phone: true,
-    title: 'DACIA — ген. партнер соревнований EcoRun',
-    text: 'Новая Dacia Duster стала официальным автомобилем соревнований EcoRun, где участники соревнуются в экономичности и бережном отношении к природе.',
+    title: tr('DACIA — ген. партнер соревнований EcoRun'),
+    text: tr('Новая Dacia Duster стала официальным автомобилем соревнований EcoRun, где участники соревнуются в экономичности и бережном отношении к природе.'),
     href: '/news/ecorun',
     image: { src: '/images/news-ecorun-600.webp', srcSet: '/images/news-ecorun-600.webp 600w' },
     imageClass: 'object-[52%_50%]',
@@ -44,7 +45,7 @@ export const news = [
     id: 'duster-offroad',
     layout: 'image',
     show: 'xl',
-    title: 'Dacia Duster на бездорожье',
+    title: tr('Dacia Duster на бездорожье'),
     text: '',
     href: '/news/duster-offroad',
     image: { src: '/images/news-offroad-800.webp', srcSet: '/images/news-offroad-800.webp 800w, /images/news-offroad-1200.webp 1200w' },
@@ -56,12 +57,12 @@ export const news = [
     video: true,
     show: 'md',
     phone: true,
-    title: 'Мировая премьера DACIA на IAA MOBILITY 2021 в Мюнхене',
-    text: 'Бренд Dacia примет участие в Международном автосалоне в Мюнхене в 2021 году и впервые в мире представит многоцелевую семейную модель на 7 мест.',
+    title: tr('Мировая премьера DACIA на IAA MOBILITY 2021 в Мюнхене'),
+    text: tr('Бренд Dacia примет участие в Международном автосалоне в Мюнхене в 2021 году и впервые в мире представит многоцелевую семейную модель на 7 мест.'),
     href: '/news/iaa-2021',
     image: { src: '/images/news-iaa-1192.webp', srcSet: '/images/news-iaa-640.webp 640w, /images/news-iaa-1192.webp 1192w' },
     videoUrl: 'https://www.youtube.com/watch?v=PHZsROeZN7E',
   },
 ];
 
-export const newsMoreCta = { label: 'Читать больше новостей', href: '/news' };
+export const newsMoreCta = { label: tr('Читать больше новостей'), href: '/news' };

@@ -1,8 +1,9 @@
 import React from 'react';
 import { cn } from '../utils';
+import { tr } from '../../../i18n';
 
 /** "от 12 880 €" chip: Light prefix + Medium price, 1px d-5 border. */
-export function PriceBadge({ prefix = 'от', className, children }) {
+export function PriceBadge({ prefix = tr('от'), className, children }) {
   return (
     <span
       className={cn(

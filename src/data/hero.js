@@ -1,3 +1,4 @@
+import { tr } from '../i18n';
 /**
  * Hero slides. One slide is designed so far, its text is shared; each slide has its own photo.
  * Photos are art-directed by orientation. The cars sit on the vertical centre line of the source, so both
@@ -22,10 +23,10 @@ const photos = {
 };
 
 const slide = {
-  title: 'Осеннее предложение',
-  subtitle: 'Модельный ряд Dacia',
-  primary: { label: 'Посмотреть все предложения', href: '/offers' },
-  secondary: { label: 'Запросить тест-драйв', href: '/test-drive' },
+  title: tr('Осеннее предложение'),
+  subtitle: tr('Модельный ряд Dacia'),
+  primary: { label: tr('Посмотреть все предложения'), href: '/offers' },
+  secondary: { label: tr('Запросить тест-драйв'), href: '/test-drive' },
 };
 
 export const heroSlides = [

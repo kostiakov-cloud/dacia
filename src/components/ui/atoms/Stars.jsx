@@ -1,11 +1,12 @@
 import React from 'react';
 import { Star } from 'lucide-react';
 import { cn } from '../utils';
+import { tr } from '../../../i18n';
 
 /** 5-star rating: filled dark stars + pale unfilled ones. */
 export function Stars({ value = 5, size = 14, className }) {
   return (
-    <span role="img" aria-label={`Оценка ${value} из 5`} className={cn('inline-flex gap-0.5', className)}>
+    <span role="img" aria-label={tr('Оценка {value} из 5', { value })} className={cn('inline-flex gap-0.5', className)}>
       {Array.from({ length: 5 }, (_, i) => (
         <Star
           key={i}

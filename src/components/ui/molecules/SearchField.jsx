@@ -1,9 +1,10 @@
 import React from 'react';
 import { cn } from '../utils';
 import { SearchIcon } from '../atoms/MenuIcons';
+import { tr } from '../../../i18n';
 
 /** Big borderless search field: 24px icon + 20px Light input. Focuses itself on mount. */
-export const SearchField = React.forwardRef(({ placeholder = 'Что будем искать?', autoFocus = true, className, ...props }, ref) => {
+export const SearchField = React.forwardRef(({ placeholder = tr('Что будем искать?'), autoFocus = true, className, ...props }, ref) => {
   const inner = React.useRef(null);
   React.useImperativeHandle(ref, () => inner.current);
   React.useEffect(() => {

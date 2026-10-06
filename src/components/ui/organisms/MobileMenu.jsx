@@ -13,6 +13,7 @@ import { ContactChannels } from '../molecules/ContactChannels';
 import { ContactRow, MegaText, NewsItem } from '../molecules/MegaColumn';
 import { ctaLabel, modelsHref, navigation, phone, testDriveHref } from '../../../data/navigation';
 import { models as modelsData } from '../../../data/models';
+import { langFull, tr } from '../../../i18n';
 
 const contactIcons = { user: User, phone: Phone, mail: AtSign, calendar: CalendarDays };
 
@@ -112,13 +113,13 @@ export function MobileMenu({ open, onClose, nav = navigation, models = modelsDat
 
   const panel = view.type === 'panel' ? nav.find((n) => n.id === view.id) : null;
   const close = (
-    <button type="button" aria-label="Закрыть меню" onClick={onClose} className={iconBtn}>
+    <button type="button" aria-label={tr('Закрыть меню')} onClick={onClose} className={iconBtn}>
       <X size={24} strokeWidth={1.5} />
     </button>
   );
 
   return (
-    <div role="dialog" aria-modal="true" aria-label="Меню" className="fixed inset-0 z-[60] flex flex-col bg-surface-01 text-dacia-text-secondary">
+    <div role="dialog" aria-modal="true" aria-label={tr('Меню')} className="fixed inset-0 z-[60] flex flex-col bg-surface-01 text-dacia-text-secondary">
       {/* top bar */}
       <div className="flex h-14 shrink-0 items-center justify-between border-b border-alpha-d-3 bg-surface-02 px-4">
         {panel ? (
@@ -141,7 +142,7 @@ export function MobileMenu({ open, onClose, nav = navigation, models = modelsDat
                 onClick={() => setView({ type: 'search' })}
                 className="flex h-12 w-full items-center justify-between rounded-[2px] border border-alpha-d-10 bg-surface-01 px-4 text-left text-[16px] font-light text-ink-13"
               >
-                Что будем искать?
+                {tr('Что будем искать?')}
                 <SearchIcon size={24} />
               </button>
             </div>
@@ -166,18 +167,18 @@ export function MobileMenu({ open, onClose, nav = navigation, models = modelsDat
             </div>
             <div className="flex flex-col gap-4 border-t border-alpha-d-3 bg-surface-03 px-6 py-6 text-[16px]">
               <button type="button" onClick={() => setSheet(true)} className="flex items-center justify-between text-left">
-                <span className="font-light text-ink-13">Позвоните нам:</span>
+                <span className="font-light text-ink-13">{tr('Позвоните нам:')}</span>
                 <span className="flex items-center gap-2 font-medium">
                   {phone.label}
                   <PhoneIcon size={24} />
                 </span>
               </button>
               <div className="flex items-center justify-between">
-                <span className="font-light text-ink-13">Язык:</span>
+                <span className="font-light text-ink-13">{tr('Язык:')}</span>
                 <LanguageSwitcher
                   options={[
-                    { value: 'ro', label: 'Romanian' },
-                    { value: 'ru', label: 'Русский' },
+                    { value: 'ro', label: langFull.ro },
+                    { value: 'ru', label: langFull.ru },
                   ]}
                 />
               </div>
@@ -202,7 +203,7 @@ export function MobileMenu({ open, onClose, nav = navigation, models = modelsDat
             </ul>
             <div className="px-6 pb-8 pt-4">
               <a href={modelsHref} onClick={onClose} className="flex h-12 w-full items-center justify-center rounded-[2px] border border-dacia-dark-green text-[16px] font-medium text-dacia-dark-green">
-                Смотреть все модели
+                {tr('Смотреть все модели')}
               </a>
             </div>
           </>
@@ -211,8 +212,8 @@ export function MobileMenu({ open, onClose, nav = navigation, models = modelsDat
         {panel && panel.kind !== 'models' && buildMobileBlocks(panel.sections).map((b, i) => <Block key={i} block={b} index={i} />)}
       </div>
 
-      <BottomSheet open={sheet} onClose={() => setSheet(false)} title="Выберите способ связи">
-        <ContactChannels hideTitle />
+      <BottomSheet open={sheet} onClose={() => setSheet(false)} title={tr('Выберите способ связи')}>
+        <ContactChannels hideTitle call />
       </BottomSheet>
     </div>
   );

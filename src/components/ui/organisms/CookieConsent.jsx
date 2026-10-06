@@ -7,12 +7,13 @@ import { Switch } from '../atoms/Switch';
 import { SiteButton } from '../atoms/SiteButton';
 import { LanguageSwitcher } from '../molecules/LanguageSwitcher';
 import { OPEN_CONSENT_EVENT, consentCategories, getConsent, saveConsent } from '../../../lib/consent';
+import { tr } from '../../../i18n';
 
 const text = {
-  title: 'Мы ценим вашу приватность!',
-  body: 'На этом сайте мы используем файлы cookie и аналогичные функции для обработки информации о конечном устройстве и персональных данных (например, IP-адреса или информация о браузере). Обработка используется для таких целей, как интеграция контента, внешних служб и элементов от третьих лиц, статистический анализ/измерение, персонализированная реклама и интеграция социальных сетей. В зависимости от функции данные передаются третьим лицам и обрабатываются ими. Это согласие является добровольным, не требуется для использования нашего сайта и может быть отозвано в любое время с помощью значка в левом нижнем углу.',
-  selected: 'Принять выбранные',
-  all: 'Принять все',
+  title: tr('Мы ценим вашу приватность!'),
+  body: tr('На этом сайте мы используем файлы cookie и аналогичные функции для обработки информации о конечном устройстве и персональных данных (например, IP-адреса или информация о браузере). Обработка используется для таких целей, как интеграция контента, внешних служб и элементов от третьих лиц, статистический анализ/измерение, персонализированная реклама и интеграция социальных сетей. В зависимости от функции данные передаются третьим лицам и обрабатываются ими. Это согласие является добровольным, не требуется для использования нашего сайта и может быть отозвано в любое время с помощью значка в левом нижнем углу.'),
+  selected: tr('Принять выбранные'),
+  all: tr('Принять все'),
 };
 
 const allOff = Object.fromEntries(consentCategories.map((c) => [c.id, c.locked === true]));
@@ -88,7 +89,7 @@ export default function CookieConsent() {
               <Logo href="/" className="[&>img]:h-4 [&>img]:w-auto" />
               <button
                 type="button"
-                aria-label="Закрыть: только необходимые cookie"
+                aria-label={tr('Закрыть: только необходимые cookie')}
                 onClick={() => close(allOff)}
                 className="-mr-1 -mt-1 flex size-8 items-center justify-center text-dacia-text-secondary transition-colors hover:text-dacia-dark-green focus:outline-none focus-visible:ring-2 focus-visible:ring-dacia-dark-green"
               >
@@ -130,7 +131,7 @@ export default function CookieConsent() {
       {saved && !open && (
         <button
           type="button"
-          aria-label="Настройки cookie"
+          aria-label={tr('Настройки cookie')}
           onClick={() => window.dispatchEvent(new Event(OPEN_CONSENT_EVENT))}
           className={cn(
             'fixed bottom-4 left-4 z-30 flex size-12 items-center justify-center rounded-full border border-alpha-d-10 bg-surface-01 text-dacia-text-secondary shadow-md',

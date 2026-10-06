@@ -2,6 +2,7 @@ import React from 'react';
 import { PartnerCard } from '../ui/molecules/PartnerCard';
 import { financingIntro, financingPartners } from '../../data/financing';
 import { reveal } from '../../reveal';
+import { tr } from '../../i18n';
 
 /** /financing: title band with anchor chips, then a 2-column grid of partner cards (1 column below xl). */
 export function FinancingPage({ partners = financingPartners, intro = financingIntro }) {
@@ -12,7 +13,7 @@ export function FinancingPage({ partners = financingPartners, intro = financingI
           <h1 id="financing-title" className="font-block text-hs2 text-dacia-text-secondary xl:text-h2">
             {intro.title}
           </h1>
-          <nav aria-label="Партнёры" className="mt-4 flex flex-wrap items-center justify-center gap-2 md:mt-[21px]">
+          <nav aria-label={tr('Партнёры')} className="mt-4 flex flex-wrap items-center justify-center gap-2 md:mt-[21px]">
             {partners.map((p) => (
               <a
                 key={p.id}

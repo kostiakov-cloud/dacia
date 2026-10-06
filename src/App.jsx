@@ -5,6 +5,7 @@ import { RouterLinks, usePath, useScrollToHash } from './router';
 import { contentPages } from './data/content';
 import { articleBySlug } from './data/articles';
 import { models } from './data/models';
+import { LANGS, tr, withLang } from './i18n';
 
 // Secondary pages and the component showcase are lazy chunks: the home page never downloads them.
 const Models = React.lazy(() => import('./pages/Models'));
@@ -37,25 +38,25 @@ const ModelDetail = React.lazy(() => import('./pages/ModelDetail'));
 /** `current` = nav item highlighted in the header for that page. */
 const routes = {
   '/': { title: 'Dacia', element: <Home /> },
-  '/models': { title: 'Модельный ряд Dacia', current: 'models', element: <Models /> },
-  '/services': { title: 'Сервисы и обслуживание', current: 'services', element: <Services /> },
-  '/trade-in': { title: 'Трейд-ин', current: 'trade-in', element: <TradeIn /> },
-  '/offer-request': { title: 'Получите предложение', current: 'offers', element: <OfferRequest /> },
-  '/about': { title: 'Откройте для себя автомобили Dacia', current: 'about', element: <About /> },
-  '/test-drive': { title: 'Тест-драйв', element: <TestDrive /> },
-  '/compare': { title: 'Сравните модели DACIA', current: 'models', element: <Compare /> },
-  '/offers': { title: 'Предложения', current: 'offers', element: <Offers /> },
-  '/financing': { title: 'Финансирование', current: 'offers', element: <Financing /> },
-  '/faq': { title: 'Часто задаваемые вопросы', current: 'services', element: <Faq /> },
-  '/service-booking': { title: 'Запись на техническое обслуживание', current: 'services', element: <ServiceBooking /> },
-  '/contacts': { title: 'Контакты', current: 'contacts', element: <Contacts /> },
-  '/dealers': { title: 'Дилеры', current: 'contacts', element: <Dealers /> },
-  '/news': { title: 'Новости', current: 'about', element: <News /> },
-  '/stock': { title: 'Авто в наличии', current: 'offers', element: <Stock /> },
-  '/financing/calculator': { title: 'Калькулятор финансирования', current: 'offers', element: <Calculator /> },
-  '/price-list': { title: 'Скачать цены', current: 'about', element: <PriceList /> },
-  '/search': { title: 'Поиск', element: <Search /> },
-  '/corporate': { title: 'Корпоративные продажи', current: 'contacts', element: <Corporate /> },
+  '/models': { title: tr('Модельный ряд Dacia'), current: 'models', element: <Models /> },
+  '/services': { title: tr('Сервисы и обслуживание'), current: 'services', element: <Services /> },
+  '/trade-in': { title: tr('Трейд-ин'), current: 'trade-in', element: <TradeIn /> },
+  '/offer-request': { title: tr('Получите предложение'), current: 'offers', element: <OfferRequest /> },
+  '/about': { title: tr('Откройте для себя автомобили Dacia'), current: 'about', element: <About /> },
+  '/test-drive': { title: tr('Тест-драйв'), element: <TestDrive /> },
+  '/compare': { title: tr('Сравните модели DACIA'), current: 'models', element: <Compare /> },
+  '/offers': { title: tr('Предложения'), current: 'offers', element: <Offers /> },
+  '/financing': { title: tr('Финансирование'), current: 'offers', element: <Financing /> },
+  '/faq': { title: tr('Часто задаваемые вопросы'), current: 'services', element: <Faq /> },
+  '/service-booking': { title: tr('Запись на техническое обслуживание'), current: 'services', element: <ServiceBooking /> },
+  '/contacts': { title: tr('Контакты'), current: 'contacts', element: <Contacts /> },
+  '/dealers': { title: tr('Дилеры'), current: 'contacts', element: <Dealers /> },
+  '/news': { title: tr('Новости'), current: 'about', element: <News /> },
+  '/stock': { title: tr('Авто в наличии'), current: 'offers', element: <Stock /> },
+  '/financing/calculator': { title: tr('Калькулятор финансирования'), current: 'offers', element: <Calculator /> },
+  '/price-list': { title: tr('Скачать цены'), current: 'about', element: <PriceList /> },
+  '/search': { title: tr('Поиск'), element: <Search /> },
+  '/corporate': { title: tr('Корпоративные продажи'), current: 'contacts', element: <Corporate /> },
   // text pages (data/content.js)
   ...Object.fromEntries(
     Object.entries(contentPages).map(([path, p]) => [path, { title: p.title, current: p.current, element: <Content path={path} /> }])
@@ -63,7 +64,7 @@ const routes = {
 };
 
 /** Dynamic routes (`/models/:id`, `/news/:slug` ...) are added here; anything unknown is the 404 page. */
-const notFound = { title: 'Страница не найдена', element: <NotFound /> };
+const notFound = { title: tr('Страница не найдена'), element: <NotFound /> };
 const dynamicRoutes = [
   {
     pattern: /^\/news\/([\w-]+)$/,
@@ -104,6 +105,19 @@ export default function App() {
   React.useEffect(() => {
     document.title = route.title;
   }, [route.title]);
+
+  // <link rel="alternate" hreflang> for both language versions of the current page (search engines + "same page, other language")
+  React.useEffect(() => {
+    document.head.querySelectorAll('link[data-hreflang]').forEach((el) => el.remove());
+    LANGS.forEach((l) => {
+      const link = document.createElement('link');
+      link.rel = 'alternate';
+      link.hreflang = l;
+      link.href = window.location.origin + withLang(path + window.location.search, l);
+      link.dataset.hreflang = '';
+      document.head.appendChild(link);
+    });
+  }, [path]);
 
   if (hash === '#/showcase') {
     return (

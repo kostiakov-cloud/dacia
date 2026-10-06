@@ -1,11 +1,12 @@
 import React from 'react';
 import { cn } from '../utils';
+import { tr } from '../../../i18n';
 
 /**
  * Single-choice filter chips (radio group semantics): the active chip is dark green, the rest white with a 1px border.
  * 40px high, 14px Medium, 2px corners. `options` = [{ value, label }].
  */
-export function FilterChips({ options, value, onChange, label = 'Фильтр', className }) {
+export function FilterChips({ options, value, onChange, label = tr('Фильтр'), className }) {
   return (
     <div role="radiogroup" aria-label={label} className={cn('flex flex-wrap items-center gap-2', className)}>
       {options.map((o) => {

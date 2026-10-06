@@ -3,8 +3,9 @@ import { CompareCard } from '../ui/molecules/CompareCard';
 import { models as modelsData } from '../../data/models';
 import { compareGroups, compareIntro, compareSpecs } from '../../data/compare';
 import { reveal } from '../../reveal';
+import { tr, withLang } from '../../i18n';
 
-const labelOf = (m) => `${m.isNew ? 'Новый ' : ''}${m.name}${m.version ? ` (${m.version.replace(/^Для версии /, '')})` : ''}`;
+const labelOf = (m) => `${m.isNew ? tr('Новый ') : ''}${m.name}${m.version ? ` (${m.version.replace(/^Для версии /, '')})` : ''}`;
 
 /**
  * /compare?models=<idA>,<idB>: two model cards on top (each with a picker), then the spec groups side by side
@@ -27,7 +28,7 @@ export function ComparePage({ models = modelsData }) {
       const next = [...p];
       next[slot] = id;
       if (next[0] === next[1]) next[1 - slot] = p[slot]; // swap instead of showing the same car twice
-      window.history.replaceState({}, '', `/compare?models=${next.join(',')}`);
+      window.history.replaceState({}, '', withLang(`/compare?models=${next.join(',')}`));
       return next;
     });
   };
@@ -49,8 +50,8 @@ export function ComparePage({ models = modelsData }) {
 
       <div className="mx-auto max-w-[1100px] px-4 py-10 md:px-8 md:py-14">
         <div {...reveal()} className="grid grid-cols-2 gap-4 md:gap-10">
-          <CompareCard model={left} label="Первая модель" side="left" options={options(right.id)} onChange={set(0)} />
-          <CompareCard model={right} label="Вторая модель" side="right" options={options(left.id)} onChange={set(1)} />
+          <CompareCard model={left} label={tr('Первая модель')} side="left" options={options(right.id)} onChange={set(0)} />
+          <CompareCard model={right} label={tr('Вторая модель')} side="right" options={options(left.id)} onChange={set(1)} />
         </div>
 
         <div className="mt-12 md:mt-16" aria-live="polite">

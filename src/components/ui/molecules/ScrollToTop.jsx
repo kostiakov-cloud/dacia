@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowUp } from 'lucide-react';
 import { cn } from '../utils';
 import { useScrolled } from '../../../hooks/useScrolled';
+import { tr } from '../../../i18n';
 
 /** Square "up" button, bottom-right; fades in after 600px of scroll. */
 export function ScrollToTop({ className }) {
@@ -9,7 +10,7 @@ export function ScrollToTop({ className }) {
   return (
     <button
       type="button"
-      aria-label="Наверх"
+      aria-label={tr('Наверх')}
       tabIndex={visible ? 0 : -1}
       onClick={() => window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })}
       className={cn(

@@ -2,6 +2,7 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 import { cn } from '../utils';
+import { tr } from '../../../i18n';
 
 /**
  * Mobile bottom sheet: blurred 30% black backdrop (same as the mega menu) + panel sliding up.
@@ -54,7 +55,7 @@ export function BottomSheet({ open, onClose, title, className, children }) {
       >
         <div className="mb-6 flex items-center justify-between gap-4">
           <h2 className="font-display text-[18px] font-bold leading-8 text-dacia-text-secondary">{title}</h2>
-          <button type="button" aria-label="Закрыть" onClick={onClose} className="flex size-6 shrink-0 items-center justify-center text-dacia-text-secondary">
+          <button type="button" aria-label={tr('Закрыть')} onClick={onClose} className="flex size-6 shrink-0 items-center justify-center text-dacia-text-secondary">
             <X size={24} strokeWidth={1.5} />
           </button>
         </div>

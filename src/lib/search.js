@@ -4,12 +4,13 @@ import { articles } from '../data/articles';
 import { faqGroups } from '../data/faq';
 import { contentPages } from '../data/content';
 import { dealers } from '../data/dealers';
+import { tr } from '../i18n';
 
 /**
  * Client-side search index over the site's own data: models, news, FAQ, text pages, dealers and navigation links.
  * Each entry = { type, title, text, href }. Matching is case-insensitive; every word of the query must occur.
  */
-const sectionLabel = { models: 'Модели', article: 'Новости', faq: 'Вопросы', page: 'Страницы', dealer: 'Дилеры', link: 'Разделы' };
+const sectionLabel = { models: tr('Модели'), article: tr('Новости'), faq: tr('Вопросы'), page: tr('Страницы'), dealer: tr('Дилеры'), link: tr('Разделы') };
 
 function build() {
   const out = [];

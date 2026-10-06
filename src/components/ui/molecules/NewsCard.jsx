@@ -2,6 +2,7 @@ import React from 'react';
 import { CirclePlus, Play } from 'lucide-react';
 import { cn } from '../utils';
 import { VideoModal } from './VideoModal';
+import { tr } from '../../../i18n';
 
 // `max-*` variants only hide; they never override the card's own `display: flex`
 const showClass = { all: '', md: 'max-md:hidden', xl: 'max-xl:hidden' };
@@ -75,7 +76,7 @@ export function NewsCard({ layout = 'text-image', show = 'all', phone = false, v
             )}
           </div>
           <span className="inline-flex items-center gap-2 text-small font-medium text-dacia-text-secondary transition-colors group-hover:text-dacia-dark-green">
-            Читать больше
+            {tr('Читать больше')}
             <CirclePlus size={20} strokeWidth={1.5} aria-hidden />
           </span>
         </div>
@@ -86,7 +87,7 @@ export function NewsCard({ layout = 'text-image', show = 'all', phone = false, v
         <>
           <button
             type="button"
-            aria-label={`Смотреть видео: ${title}`}
+            aria-label={tr('Смотреть видео: {title}', { title })}
             onClick={() => setPlaying(true)}
             className="absolute inset-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-dacia-dark-green"
           />

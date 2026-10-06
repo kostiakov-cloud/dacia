@@ -1,3 +1,4 @@
+import { tr } from '../i18n';
 /**
  * Service tiles. `image` = { src, srcSet } (WebP in public/images/service-<id>-<w>.webp); without it the tile shows a
  * gradient. The current photos are 280px sources: sharp at 1x, a bit soft on 2x screens - drop larger files in
@@ -12,37 +13,37 @@ const photo = (id, widths = [280]) => ({
 export const services = [
   {
     id: 'oil',
-    title: 'Замена масла',
-    text: 'Своевременная замена масла и фильтров продлевает срок службы двигателя и сохраняет его мощность.',
+    title: tr('Замена масла'),
+    text: tr('Своевременная замена масла и фильтров продлевает срок службы двигателя и сохраняет его мощность.'),
     href: '/services#oil',
     bookingHref: '/service-booking?service=oil',
     image: photo('oil'),
   },
   {
     id: 'tires',
-    title: 'Проверка шин',
-    text: 'Проверим износ и давление в шинах, чтобы обеспечить оптимальное сцепление с дорогой.',
+    title: tr('Проверка шин'),
+    text: tr('Проверим износ и давление в шинах, чтобы обеспечить оптимальное сцепление с дорогой.'),
     href: '/services#tires',
     bookingHref: '/service-booking?service=tires',
     image: photo('tires'),
   },
   {
     id: 'ac',
-    title: 'Кондиционер',
-    text: 'Диагностика и заправка кондиционера, чистка салонного фильтра: комфорт в любую погоду.',
+    title: tr('Кондиционер'),
+    text: tr('Диагностика и заправка кондиционера, чистка салонного фильтра: комфорт в любую погоду.'),
     href: '/services#ac',
     bookingHref: '/service-booking?service=ac',
     image: photo('ac'),
   },
   {
     id: 'brakes',
-    title: 'Тормоза',
-    text: 'Проверка колодок, дисков и тормозной жидкости: ваша безопасность на дороге.',
+    title: tr('Тормоза'),
+    text: tr('Проверка колодок, дисков и тормозной жидкости: ваша безопасность на дороге.'),
     href: '/services#brakes',
     bookingHref: '/service-booking?service=brakes',
     image: photo('brakes'),
   },
 ];
 
-export const servicesCta = { label: 'Запись на техобслуживание', href: '/service-booking' };
-export const servicesButtonLabel = 'Записаться на ТО';
+export const servicesCta = { label: tr('Запись на техобслуживание'), href: '/service-booking' };
+export const servicesButtonLabel = tr('Записаться на ТО');

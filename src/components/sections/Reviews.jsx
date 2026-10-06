@@ -6,6 +6,7 @@ import { ReviewCard } from '../ui/molecules/ReviewCard';
 import { reviews as reviewsData } from '../../data/reviews';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { reveal } from '../../reveal';
+import { tr } from '../../i18n';
 
 /**
  * Customer reviews: full-bleed, draggable looping carousel. The centre card is aligned to the page container, so on
@@ -49,7 +50,7 @@ export function Reviews({ items = reviewsData, speed = 0.6, className }) {
 
 
   return (
-    <section ref={sectionRef} aria-roledescription="carousel" aria-label="Отзывы клиентов" className={cn('overflow-hidden bg-surface-03 pb-12 md:pb-16', className)}>
+    <section ref={sectionRef} aria-roledescription="carousel" aria-label={tr('Отзывы клиентов')} className={cn('overflow-hidden bg-surface-03 pb-12 md:pb-16', className)}>
       <div ref={viewport} {...reveal()} className="overflow-hidden">
         <div className="flex touch-pan-y items-start">
           {items.map((r, i) => (
@@ -57,7 +58,7 @@ export function Reviews({ items = reviewsData, speed = 0.6, className }) {
               key={r.id}
               role="group"
               aria-roledescription="slide"
-              aria-label={`${i + 1} из ${items.length}`}
+              aria-label={tr('{n0} из {length}', { n0: i + 1, length: items.length })}
               // the gap is slide padding (not flex gap) so it is also kept across the loop seam
               className="min-w-0 flex-[0_0_calc(min(386px,77vw)+16px)] px-2 md:flex-[0_0_416px] md:px-[15px]"
             >

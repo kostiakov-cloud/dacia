@@ -1,14 +1,15 @@
 import React from 'react';
 import { cn } from '../utils';
+import { formatNumber, tr } from '../../../i18n';
 
-const fmt = (n) => `${new Intl.NumberFormat('ru-RU').format(n).replace(/ /g, ' ')} €`;
+const fmt = (n) => `${formatNumber(n)} €`;
 
 /**
  * Two-handle range slider built from two native <input type="range"> (keyboard + screen-reader friendly).
  * The thumbs are styled in index.css (.dual-range); the filled part and the dark value bubbles under the thumbs follow
  * the values. Controlled: `value` = [from, to].
  */
-export function RangeSlider({ min, max, step = 100, value, onChange, label = 'Диапазон цен', format = fmt, className }) {
+export function RangeSlider({ min, max, step = 100, value, onChange, label = tr('Диапазон цен'), format = fmt, className }) {
   const [a, b] = value;
   const pct = (v) => ((v - min) / (max - min)) * 100;
   const set = (i, v) => {
@@ -24,8 +25,8 @@ export function RangeSlider({ min, max, step = 100, value, onChange, label = 'Д
       <div className="dual-range relative mx-3 h-6">
         <div className="absolute inset-x-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-surface-08" />
         <div className="absolute top-1/2 h-1 -translate-y-1/2 rounded-full bg-dacia-dark-green" style={{ left: `${pct(a)}%`, right: `${100 - pct(b)}%` }} />
-        <input type="range" min={min} max={max} step={step} value={a} aria-label={`${label}: от`} aria-valuetext={format(a)} onChange={(e) => set(0, +e.target.value)} />
-        <input type="range" min={min} max={max} step={step} value={b} aria-label={`${label}: до`} aria-valuetext={format(b)} onChange={(e) => set(1, +e.target.value)} />
+        <input type="range" min={min} max={max} step={step} value={a} aria-label={tr('{label}: от', { label })} aria-valuetext={format(a)} onChange={(e) => set(0, +e.target.value)} />
+        <input type="range" min={min} max={max} step={step} value={b} aria-label={tr('{label}: до', { label })} aria-valuetext={format(b)} onChange={(e) => set(1, +e.target.value)} />
       </div>
       <div className="relative mx-3 mt-1 h-8">
         {[a, b].map((v, i) => (

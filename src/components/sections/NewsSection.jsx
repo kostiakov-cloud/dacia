@@ -4,6 +4,7 @@ import { NewsCard } from '../ui/molecules/NewsCard';
 import { SiteButton } from '../ui/atoms/SiteButton';
 import { news as newsData, newsMoreCta } from '../../data/news';
 import { reveal } from '../../reveal';
+import { tr } from '../../i18n';
 
 /**
  * "Последние новости": continues the light band of the reviews. Desktop = 2-column zig-zag grid of 280px rows
@@ -15,9 +16,9 @@ export function NewsSection({ items = newsData, cta = newsMoreCta, className }) 
       <div className="mx-auto max-w-[1280px] px-4 pb-12 pt-4 md:px-8 md:pb-16 md:pt-8 xl:pb-24">
         <header {...reveal()} className="mb-8 text-center md:mb-12">
           <h2 id="news-title" className="font-block text-hs2 text-dacia-text-secondary xl:text-h2">
-            Последние новости
+            {tr('Последние новости')}
           </h2>
-          <p className="mt-2 text-small text-ink-13 md:text-root">Будьте в курсе главных событий Dacia</p>
+          <p className="mt-2 text-small text-ink-13 md:text-root">{tr('Будьте в курсе главных событий Dacia')}</p>
         </header>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:gap-8">

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useMediaQuery } from '../../../hooks/useMediaQuery';
+import { formatNumber } from '../../../i18n';
 
 const easeOutExpo = (t) => (t === 1 ? 1 : 1 - 2 ** (-10 * t));
 
@@ -11,7 +12,7 @@ function parse(text) {
   return { prefix: m[1], n: Number(digits), group: /[\s ]/.test(m[2].trim()), suffix: m[3] };
 }
 
-const fmt = (n, group) => (group ? new Intl.NumberFormat('ru-RU').format(n).replace(/ /g, ' ') : String(n));
+const fmt = (n, group) => (group ? formatNumber(n) : String(n));
 
 /**
  * Scroll-triggered number counter: counts 0 -> value (expo-out, 1.4s) every time the number scrolls into view

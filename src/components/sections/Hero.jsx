@@ -6,6 +6,7 @@ import { OnDarkButton } from '../ui/atoms/OnDarkButton';
 import { SliderControls } from '../ui/molecules/SliderControls';
 import { heroSlides } from '../../data/hero';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
+import { tr } from '../../i18n';
 
 function Slide({ slide, index, count, priority }) {
   const Heading = index === 0 ? 'h1' : 'h2';
@@ -13,7 +14,7 @@ function Slide({ slide, index, count, priority }) {
     <div
       role="group"
       aria-roledescription="slide"
-      aria-label={`${index + 1} из ${count}`}
+      aria-label={tr('{n0} из {count}', { n0: index + 1, count })}
       className="relative h-full min-w-0 flex-[0_0_100%]"
     >
       {slide.photo ? (
@@ -63,13 +64,13 @@ function Slide({ slide, index, count, priority }) {
 /**
  * Home hero: header + hero fill exactly one dynamic viewport (`100dvh - var(--site-header-h)`, the variable is
  * measured by <SiteHeader>).
- * full-width looping slider with autoplay (6s). Pauses on hover / focus,
+ * full-width looping slider with autoplay (6s). Pauses only on keyboard focus (not on hover: the hero fills the screen, so the pointer is almost always over it),
  * is swipeable, and does not autoplay for `prefers-reduced-motion`.
  */
 export function Hero({ slides = heroSlides, delay = 6000, className }) {
   const reduce = useMediaQuery('(prefers-reduced-motion: reduce)');
   const plugins = React.useMemo(
-    () => (reduce ? [] : [Autoplay({ delay, stopOnInteraction: false, stopOnMouseEnter: true })]),
+    () => (reduce ? [] : [Autoplay({ delay, stopOnInteraction: false, stopOnMouseEnter: false })]),
     [reduce, delay]
   );
   const [viewport, embla] = useEmblaCarousel({ loop: true, duration: 28 }, plugins);
@@ -86,7 +87,7 @@ export function Hero({ slides = heroSlides, delay = 6000, className }) {
   }, [embla]);
 
   // Fill the active bullet in step with the autoplay timer (only while the hero is on screen).
-  // When the plugin is paused (hover / focus) `timeUntilNext()` is null and the arc just holds.
+  // When the plugin is paused (focus) `timeUntilNext()` is null and the arc just holds.
   React.useEffect(() => {
     if (!embla || reduce) return undefined;
     let raf = 0;
@@ -111,7 +112,7 @@ export function Hero({ slides = heroSlides, delay = 6000, className }) {
     <section
       ref={sectionRef}
       aria-roledescription="carousel"
-      aria-label="Главные предложения"
+      aria-label={tr('Главные предложения')}
       className={cn('hero-h relative min-h-[480px] overflow-hidden bg-ink-18', className)}
     >
       <div ref={viewport} className="h-full overflow-hidden">

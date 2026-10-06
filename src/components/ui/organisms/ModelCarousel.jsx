@@ -6,6 +6,7 @@ import { cn } from '../utils';
 import { ModelCard } from '../molecules/ModelCard';
 import { modelsHref } from '../../../data/navigation';
 import { useMediaQuery } from '../../../hooks/useMediaQuery';
+import { tr } from '../../../i18n';
 
 /**
  * Models slider for the mega menu: endless loop (the last model is followed by the first, there is no edge) that
@@ -13,7 +14,7 @@ import { useMediaQuery } from '../../../hooks/useMediaQuery';
  * is static for `prefers-reduced-motion`. `visible` cards per page; arrows, a "2-5 из 8" counter (the window that is
  * currently at the left edge), dots and a "view all" button.
  */
-export function ModelCarousel({ items = [], visible = 5, allLabel = 'Смотреть все модели', allHref = modelsHref, speed = 0.5, className }) {
+export function ModelCarousel({ items = [], visible = 5, allLabel = tr('Смотреть все модели'), allHref = modelsHref, speed = 0.5, className }) {
   const reduce = useMediaQuery('(prefers-reduced-motion: reduce)');
   const plugins = React.useMemo(
     () => (reduce ? [] : [AutoScroll({ speed, startDelay: 900, stopOnInteraction: false, stopOnMouseEnter: true, stopOnFocusIn: true })]),
@@ -65,16 +66,16 @@ export function ModelCarousel({ items = [], visible = 5, allLabel = 'Смотр�
       </div>
 
       <div data-mega-item className="flex items-center gap-3 text-[12px] font-medium text-dacia-text-secondary">
-        <button type="button" aria-label="Назад" onClick={() => manual((e) => e.scrollPrev())} className="focus:outline-none focus-visible:ring-2 focus-visible:ring-dacia-dark-green">
+        <button type="button" aria-label={tr('Назад')} onClick={() => manual((e) => e.scrollPrev())} className="focus:outline-none focus-visible:ring-2 focus-visible:ring-dacia-dark-green">
           <ChevronLeft size={20} strokeWidth={1.5} />
         </button>
-        <span className="whitespace-nowrap tabular-nums">{start + 1}-{end} из {n}</span>
+        <span className="whitespace-nowrap tabular-nums">{start + 1}-{end} {tr('из')} {n}</span>
         <div className="flex items-center gap-1.5" aria-hidden>
           {items.map((_, i) => (
             <span key={i} className={cn('size-2.5 rounded-full border transition-colors duration-300', inWindow(i) ? 'border-dacia-dark-green' : 'border-alpha-d-10')} />
           ))}
         </div>
-        <button type="button" aria-label="Вперёд" onClick={() => manual((e) => e.scrollNext())} className="focus:outline-none focus-visible:ring-2 focus-visible:ring-dacia-dark-green">
+        <button type="button" aria-label={tr('Вперёд')} onClick={() => manual((e) => e.scrollNext())} className="focus:outline-none focus-visible:ring-2 focus-visible:ring-dacia-dark-green">
           <ChevronRight size={20} strokeWidth={1.5} />
         </button>
       </div>

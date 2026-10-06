@@ -6,10 +6,11 @@ import { ModelDetails } from '../ui/molecules/ModelDetails';
 import { SliderControls } from '../ui/molecules/SliderControls';
 import { models as modelsData } from '../../data/models';
 import { reveal } from '../../reveal';
+import { tr } from '../../i18n';
 
 function Slide({ model, index, count, near }) {
   return (
-    <div role="group" aria-roledescription="slide" aria-label={`${index + 1} из ${count}`} className="min-w-0 flex-[0_0_100%]">
+    <div role="group" aria-roledescription="slide" aria-label={tr('{n0} из {count}', { n0: index + 1, count })} className="min-w-0 flex-[0_0_100%]">
       <div className="mx-auto grid max-w-[1280px] items-center gap-6 px-4 pt-10 md:px-8 xl:grid-cols-2 xl:gap-16 xl:pt-16">
         <ModelImage
           model={model}
@@ -53,7 +54,7 @@ export function ModelShowcase({ models = modelsData, initialId = 'sandero-stepwa
     return () => io.disconnect();
   }, []);
   return (
-    <section ref={sectionRef} aria-roledescription="carousel" aria-label="Модели Dacia" className={cn('bg-dacia-light-bg', className)}>
+    <section ref={sectionRef} aria-roledescription="carousel" aria-label={tr('Модели Dacia')} className={cn('bg-dacia-light-bg', className)}>
       <div ref={viewport} {...reveal()} className="overflow-hidden">
         <div className="flex touch-pan-y">
           {models.map((m, i) => {

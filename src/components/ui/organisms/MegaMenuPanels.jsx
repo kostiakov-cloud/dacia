@@ -10,6 +10,7 @@ import { SearchBlock } from '../molecules/SearchBlock';
 import { navigation } from '../../../data/navigation';
 import { models as modelsData } from '../../../data/models';
 import { useIsXl } from '../../../hooks/useMediaQuery';
+import { tr } from '../../../i18n';
 
 /** Top-level nav entries (id → panel id, label) derived from the shared navigation data. */
 export const megaNav = navigation.map(({ id, label }) => ({ panel: id, label }));
@@ -77,11 +78,11 @@ export function MegaMenuPanels({ nav = navigation, models = modelsData, images =
         )
       )}
 
-      <Menu.Mega value={contactPanel} bare label="Выберите способ связи">
+      <Menu.Mega value={contactPanel} bare label={tr('Выберите способ связи')}>
         <ContactChannels />
       </Menu.Mega>
 
-      <Menu.Mega value={searchPanel} bare label="Поиск">
+      <Menu.Mega value={searchPanel} bare label={tr('Поиск')}>
         <SearchBlock />
       </Menu.Mega>
     </>

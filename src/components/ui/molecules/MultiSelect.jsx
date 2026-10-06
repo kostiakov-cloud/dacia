@@ -2,13 +2,14 @@ import React from 'react';
 import { X } from 'lucide-react';
 import { cn } from '../utils';
 import { ChevronDownIcon } from '../atoms/SliderChevrons';
+import { tr } from '../../../i18n';
 
 /**
  * Multi-choice dropdown with removable chips (like the design: «Полное ТО ×» + chevron). Controlled: `value` = string[].
  * Keyboard (on the chevron button): ↓ / ↑ open and move, Enter / Space toggle the highlighted option, Esc closes.
  * Pointer: click the field to open, click outside to close; each chip has its own remove button.
  */
-export function MultiSelect({ label, options = [], value = [], onChange, placeholder = 'Выберите', error = false, errorMessage, className }) {
+export function MultiSelect({ label, options = [], value = [], onChange, placeholder = tr('Выберите'), error = false, errorMessage, className }) {
   const [open, setOpen] = React.useState(false);
   const [active, setActive] = React.useState(0);
   const root = React.useRef(null);
@@ -56,7 +57,7 @@ export function MultiSelect({ label, options = [], value = [], onChange, placeho
               {v}
               <button
                 type="button"
-                aria-label={`Убрать: ${v}`}
+                aria-label={tr('Убрать: {v}', { v })}
                 onClick={(e) => {
                   e.stopPropagation();
                   toggle(v);

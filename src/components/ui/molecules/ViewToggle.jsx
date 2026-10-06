@@ -1,16 +1,17 @@
 import React from 'react';
 import { LayoutGrid, List } from 'lucide-react';
 import { cn } from '../utils';
+import { tr } from '../../../i18n';
 
 const items = [
-  { value: 'grid', label: 'Плитка', icon: LayoutGrid },
-  { value: 'list', label: 'Список', icon: List },
+  { value: 'grid', label: tr('Плитка'), icon: LayoutGrid },
+  { value: 'list', label: tr('Список'), icon: List },
 ];
 
 /** Two-button grid / list switch (40px segments, the active one has a light grey fill). */
 export function ViewToggle({ value, onChange, className }) {
   return (
-    <div role="radiogroup" aria-label="Вид" className={cn('flex overflow-hidden rounded-cr2 border border-alpha-d-5 bg-surface-01', className)}>
+    <div role="radiogroup" aria-label={tr('Вид')} className={cn('flex overflow-hidden rounded-cr2 border border-alpha-d-5 bg-surface-01', className)}>
       {items.map(({ value: v, label, icon: Icon }) => {
         const active = v === value;
         return (

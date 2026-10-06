@@ -2,6 +2,7 @@ import React from 'react';
 import { OfferRow } from '../ui/molecules/OfferRow';
 import { offerTabs, offers, offersIntro } from '../../data/offers';
 import { reveal } from '../../reveal';
+import { tr } from '../../i18n';
 
 /** /offers: title band with the campaign tab, then the offer rows (photo alternates, every second row on a light band). */
 export function OffersPage({ items = offers, tabs = offerTabs, intro = offersIntro }) {
@@ -12,7 +13,7 @@ export function OffersPage({ items = offers, tabs = offerTabs, intro = offersInt
           <h1 id="offers-title" className="font-block text-hs2 text-dacia-text-secondary xl:text-h2">
             {intro.title}
           </h1>
-          <div role="tablist" aria-label="Акции" className="mt-4 flex justify-center gap-2 md:mt-[21px]">
+          <div role="tablist" aria-label={tr('Акции')} className="mt-4 flex justify-center gap-2 md:mt-[21px]">
             {tabs.map((t) => (
               <button
                 key={t.id}

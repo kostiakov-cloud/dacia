@@ -6,12 +6,13 @@ import { models } from '../../data/models';
 import { trimsFor } from '../../data/modelPage';
 import { priceListFile } from '../../data/priceList';
 import { reveal } from '../../reveal';
+import { tr } from '../../i18n';
 
 /** /price-list: download button + prices by model and trim (#trims). */
 export function PriceListPage() {
   return (
     <>
-      <PageBand title="Скачать цены" subtitle="Актуальные цены на автомобили Dacia по комплектациям">
+      <PageBand title={tr('Скачать цены')} subtitle={tr('Актуальные цены на автомобили Dacia по комплектациям')}>
         <div className="mt-6 flex flex-col items-center gap-2">
           <SiteButton href={priceListFile.href} className="gap-2 max-md:w-full"><Download size={20} strokeWidth={1.5} aria-hidden />{priceListFile.label}</SiteButton>
           <p className="text-caption font-light text-ink-13">{priceListFile.note}</p>

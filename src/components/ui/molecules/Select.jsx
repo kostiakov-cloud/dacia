@@ -1,13 +1,14 @@
 import React from 'react';
 import { cn } from '../utils';
 import { ChevronDownIcon } from '../atoms/SliderChevrons';
+import { tr } from '../../../i18n';
 
 /**
  * Native <select> dressed like <Input size="l">: same label, 48px field, fcfcfd fill, 1px black/5 border, 2px corners and a
  * chevron. Native = fully accessible and works with the platform pickers on phones. `placeholder` is the empty option
  * (grey while nothing is chosen). `error` / `errorMessage` like <Input>.
  */
-export const Select = React.forwardRef(({ label, placeholder = 'Выберите', options = [], optionLabels, error = false, errorMessage, className, id, value, ...props }, ref) => {
+export const Select = React.forwardRef(({ label, placeholder = tr('Выберите'), options = [], optionLabels, error = false, errorMessage, className, id, value, ...props }, ref) => {
   const autoId = React.useId();
   const selectId = id || autoId;
   return (

@@ -7,6 +7,7 @@ import { PhoneIcon } from '../atoms/MenuIcons';
 import { ctaLabel, navigation, phone, testDriveHref } from '../../../data/navigation';
 import { useIsMd, useIsXl } from '../../../hooks/useMediaQuery';
 import { useScrolled } from '../../../hooks/useScrolled';
+import { tr } from '../../../i18n';
 
 const ContactSheet = React.lazy(() => import('./ContactSheet'));
 const MobileMenu = React.lazy(() => import('./MobileMenu').then((m) => ({ default: m.MobileMenu })));
@@ -18,7 +19,7 @@ function MobileHeader({ headerRef, open, setOpen }) {
         <Logo href="/" />
         <button
           type="button"
-          aria-label="Открыть меню"
+          aria-label={tr('Открыть меню')}
           aria-expanded={open}
           onClick={() => setOpen(true)}
           className="flex size-10 items-center justify-center text-dacia-text-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-dacia-dark-green"
@@ -103,7 +104,7 @@ export function SiteHeader({ nav = navigation, images = {}, current }) {
       <Menu.Logo className="items-center gap-4">
         <button
           type="button"
-          aria-label="Открыть меню"
+          aria-label={tr('Открыть меню')}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen(true)}
           className="flex size-10 items-center justify-center text-dacia-text-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-dacia-dark-green xl:hidden"

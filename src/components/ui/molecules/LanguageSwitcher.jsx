@@ -1,20 +1,22 @@
 import React from 'react';
 import { cn } from '../utils';
+import { lang, langShort, switchLang } from '../../../i18n';
 
 /**
  * Language Switcher — two (or more) options split by a 12px divider.
  * Selected option: Medium 14/24, text-secondary. Others: Regular 16/28, text-tertiary.
+ * Reads the current language from the URL and, on a click, reloads the SAME page in the other language (see src/i18n).
  */
 const defaultOptions = [
-  { value: 'ro', label: 'Ro' },
-  { value: 'ru', label: 'Ру' },
+  { value: 'ro', label: langShort.ro },
+  { value: 'ru', label: langShort.ru },
 ];
 
 export const LanguageSwitcher = React.forwardRef(({
   options = defaultOptions,
-  value,
+  value = lang,
   defaultValue,
-  onValueChange,
+  onValueChange = switchLang,
   className,
   ...props
 }, ref) => {

@@ -7,6 +7,7 @@ import { MenuItem } from '../atoms/MenuItem';
 import { PhoneIcon, SearchIcon } from '../atoms/MenuIcons';
 import { LanguageSwitcher } from '../molecules/LanguageSwitcher';
 import { MegaPromo } from '../molecules/MegaPromo';
+import { tr } from '../../../i18n';
 
 // GSAP is only needed once a panel opens, so it is fetched on the first sign of user intent (pointer / touch / key),
 // with a 4s idle fallback. Until it arrives panels simply appear without animation.
@@ -136,7 +137,7 @@ function MenuRoot({ value, defaultValue, onValueChange, open, defaultOpen = null
                 'relative z-50 w-full border-b bg-surface-01 px-6 pt-3 max-xl:sticky max-xl:top-0',
                 'xl:fixed xl:w-auto xl:box-border xl:py-0 xl:transition-[top,left,right,height,padding,border-radius,background-color,border-color,backdrop-filter] xl:duration-[600ms] xl:ease-[cubic-bezier(0.16,1,0.3,1)]',
                 floating
-                  ? 'xl:left-4 xl:right-4 xl:top-4 xl:h-12 xl:rounded-[2px] xl:border-transparent xl:bg-alpha-popup-bg xl:pl-6 xl:pr-0 xl:backdrop-blur-md'
+                  ? 'xl:left-4 xl:right-4 xl:top-4 xl:h-12 xl:rounded-[2px] xl:border-b-0 xl:border-transparent xl:bg-alpha-popup-bg xl:pl-6 xl:pr-0 xl:backdrop-blur-md'
                   : 'border-alpha-d-3 xl:inset-x-0 xl:top-0 xl:h-[81px] xl:rounded-none xl:px-8 xl:backdrop-blur-0'
               )
             : floating
@@ -404,7 +405,7 @@ function MenuMega({ value, promo, bare = false, label, className, children }) {
         )}
         <button
           type="button"
-          aria-label="Закрыть"
+          aria-label={tr('Закрыть')}
           onClick={() => setOpen(null)}
           data-mega-item
           className="absolute right-6 top-6 flex size-6 xl:right-8 xl:top-8 items-center justify-center text-dacia-text-secondary transition-colors hover:text-dacia-dark-green focus:outline-none focus-visible:ring-2 focus-visible:ring-dacia-dark-green"

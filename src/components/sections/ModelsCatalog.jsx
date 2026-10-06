@@ -7,6 +7,7 @@ import { ViewToggle } from '../ui/molecules/ViewToggle';
 import { RangeSlider } from '../ui/molecules/RangeSlider';
 import { models as modelsData } from '../../data/models';
 import { reveal } from '../../reveal';
+import { tr } from '../../i18n';
 
 // order of the catalogue in the design (the home page keeps the order of data/models.js)
 const catalogOrder = ['sandero-stepway-new', 'sandero-stepway', 'logan-new', 'logan', 'bigster', 'duster', 'jogger', 'sandero'];
@@ -17,7 +18,7 @@ const byCatalogOrder = (a, b) => {
 };
 
 const filters = [
-  { value: 'all', label: 'Все', test: () => true },
+  { value: 'all', label: tr('Все'), test: () => true },
   { value: 'hybrid', label: 'Hybrid', test: (m) => Boolean(m.hybrid) },
   { value: 'stepway', label: 'Stepway', test: (m) => /stepway/i.test(m.name) },
 ];
@@ -44,10 +45,10 @@ export function ModelsCatalog({ models: modelsProp = modelsData, className }) {
       <section aria-labelledby="catalog-title" className="border-b border-alpha-d-3 bg-surface-03">
         <div {...reveal('fade')} className="mx-auto max-w-[1280px] px-4 pb-10 pt-10 text-center md:px-8 md:pb-12 md:pt-14">
           <h1 id="catalog-title" className="font-block text-hs2 text-dacia-text-secondary xl:text-h2">
-            Модельный ряд Dacia
+            {tr('Модельный ряд Dacia')}
           </h1>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-2 md:mt-8">
-            <FilterChips options={filters} value={filter} onChange={setFilter} label="Тип модели" />
+            <FilterChips options={filters} value={filter} onChange={setFilter} label={tr('Тип модели')} />
             <ViewToggle value={view} onChange={setView} className="max-sm:hidden" />
           </div>
           <div className="mt-8 md:mt-10">
@@ -56,12 +57,12 @@ export function ModelsCatalog({ models: modelsProp = modelsData, className }) {
         </div>
       </section>
 
-      <section aria-label="Список моделей" className="mx-auto max-w-[1280px] px-4 pb-12 pt-8 md:px-8 md:pb-16 md:pt-10 xl:pb-24 xl:pt-12">
+      <section aria-label={tr('Список моделей')} className="mx-auto max-w-[1280px] px-4 pb-12 pt-8 md:px-8 md:pb-16 md:pt-10 xl:pb-24 xl:pt-12">
         <p className="sr-only" aria-live="polite">
-          Найдено моделей: {shown.length}
+          {tr('Найдено моделей:')} {shown.length}
         </p>
         {shown.length === 0 ? (
-          <p className="py-16 text-center text-root text-ink-13">По выбранным условиям моделей нет. Измените фильтр или диапазон цен.</p>
+          <p className="py-16 text-center text-root text-ink-13">{tr('По выбранным условиям моделей нет. Измените фильтр или диапазон цен.')}</p>
         ) : view === 'list' ? (
           <div className="-mx-4 md:-mx-8">
             {shown.map((m, i) => (

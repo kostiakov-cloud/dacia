@@ -46,4 +46,9 @@ const specs = {
   sandero: { eco: 'B', stats: [{ value: '100', unit: 'л.с.', label: 'Мощность' }, { value: '328', unit: 'л', label: 'Багажник' }, { value: '8"', label: 'Дисплей' }] },
 };
 
-export const models = base.map((m) => ({ ...m, ...specs[m.id], image: getModelImage(m.id) }));
+export const models = base.map((m) => ({
+  ...m,
+  ...specs[m.id],
+  priceValue: Number(m.price.replace(/\D/g, '')), // '12 880 €' -> 12880 (catalogue price filter)
+  image: getModelImage(m.id),
+}));

@@ -13,14 +13,14 @@ export function MegaColumn({ title, className, children }) {
 
 /** Descriptive paragraph (14/28 Light, text-tertiary). */
 export function MegaText({ className, children }) {
-  return <p className={cn('text-[14px] font-light leading-7 text-dacia-text-tertiary', className)}>{children}</p>;
+  return <p className={cn('text-[14px] font-light leading-7 text-ink-13', className)}>{children}</p>;
 }
 
 /** News row: 12px date + 16/28 headline. */
 export function NewsItem({ date, href = '#', className, children }) {
   return (
     <a href={href} className={cn('group flex flex-col gap-1', className)}>
-      <span className="text-[12px] font-light leading-4 text-dacia-text-tertiary">{date}</span>
+      <span className="text-[12px] font-light leading-4 text-ink-13">{date}</span>
       <span className="text-[16px] leading-7 text-dacia-text-secondary transition-colors group-hover:text-dacia-dark-green">
         {children}
       </span>

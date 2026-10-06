@@ -11,7 +11,7 @@ import { SearchBlock } from '../molecules/SearchBlock';
 import { BottomSheet } from '../molecules/BottomSheet';
 import { ContactChannels } from '../molecules/ContactChannels';
 import { ContactRow, MegaText, NewsItem } from '../molecules/MegaColumn';
-import { ctaLabel, navigation, phone } from '../../../data/navigation';
+import { ctaLabel, modelsHref, navigation, phone, testDriveHref } from '../../../data/navigation';
 import { models as modelsData } from '../../../data/models';
 
 const contactIcons = { user: User, phone: Phone, mail: AtSign, calendar: CalendarDays };
@@ -139,7 +139,7 @@ export function MobileMenu({ open, onClose, nav = navigation, models = modelsDat
               <button
                 type="button"
                 onClick={() => setView({ type: 'search' })}
-                className="flex h-12 w-full items-center justify-between rounded-[2px] border border-alpha-d-10 bg-surface-01 px-4 text-left text-[16px] font-light text-ink-12"
+                className="flex h-12 w-full items-center justify-between rounded-[2px] border border-alpha-d-10 bg-surface-01 px-4 text-left text-[16px] font-light text-ink-13"
               >
                 Что будем искать?
                 <SearchIcon size={24} />
@@ -160,20 +160,20 @@ export function MobileMenu({ open, onClose, nav = navigation, models = modelsDat
               ))}
             </ul>
             <div className="px-6 pb-8">
-              <a href="#" className="flex h-12 w-full items-center justify-center rounded-[2px] bg-dacia-dark-green text-[16px] font-medium text-surface-01">
+              <a href={testDriveHref} onClick={onClose} className="flex h-12 w-full items-center justify-center rounded-[2px] bg-dacia-dark-green text-[16px] font-medium text-surface-01">
                 {ctaLabel}
               </a>
             </div>
             <div className="flex flex-col gap-4 border-t border-alpha-d-3 bg-surface-03 px-6 py-6 text-[16px]">
               <button type="button" onClick={() => setSheet(true)} className="flex items-center justify-between text-left">
-                <span className="font-light text-dacia-text-tertiary">Позвоните нам:</span>
+                <span className="font-light text-ink-13">Позвоните нам:</span>
                 <span className="flex items-center gap-2 font-medium">
                   {phone.label}
                   <PhoneIcon size={24} />
                 </span>
               </button>
               <div className="flex items-center justify-between">
-                <span className="font-light text-dacia-text-tertiary">Язык:</span>
+                <span className="font-light text-ink-13">Язык:</span>
                 <LanguageSwitcher
                   options={[
                     { value: 'ro', label: 'Romanian' },
@@ -187,18 +187,25 @@ export function MobileMenu({ open, onClose, nav = navigation, models = modelsDat
 
         {view.type === 'search' && (
           <div className="px-6 py-6">
-            <SearchBlock bordered />
+            <SearchBlock bordered onSubmitted={onClose} />
           </div>
         )}
 
         {panel && panel.kind === 'models' && (
-          <ul className="px-6 py-2">
-            {models.map((m) => (
-              <li key={m.id} className="border-b border-alpha-d-3 last:border-0">
-                <ModelRow {...m} />
-              </li>
-            ))}
-          </ul>
+          <>
+            <ul className="px-6 py-2">
+              {models.map((m) => (
+                <li key={m.id} className="border-b border-alpha-d-3">
+                  <ModelRow {...m} />
+                </li>
+              ))}
+            </ul>
+            <div className="px-6 pb-8 pt-4">
+              <a href={modelsHref} onClick={onClose} className="flex h-12 w-full items-center justify-center rounded-[2px] border border-dacia-dark-green text-[16px] font-medium text-dacia-dark-green">
+                Смотреть все модели
+              </a>
+            </div>
+          </>
         )}
 
         {panel && panel.kind !== 'models' && buildMobileBlocks(panel.sections).map((b, i) => <Block key={i} block={b} index={i} />)}

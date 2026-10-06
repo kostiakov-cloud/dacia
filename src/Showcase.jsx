@@ -28,7 +28,7 @@ function MenuDemo(props) {
           <Menu.Item key={panel} panel={panel}>{label}</Menu.Item>
         ))}
         <Menu.Group>
-          <Menu.Item panel={contactPanel} trigger="click" icon={<PhoneIcon />}>022 205 860</Menu.Item>
+          <Menu.Item panel={contactPanel} trigger="click" icon={<PhoneIcon />}>020 7946 0958</Menu.Item>
           <Menu.Language />
           <Menu.Search panel={searchPanel} />
         </Menu.Group>

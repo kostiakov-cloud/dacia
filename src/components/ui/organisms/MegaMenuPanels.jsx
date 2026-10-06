@@ -69,7 +69,7 @@ export function MegaMenuPanels({ nav = navigation, models = modelsData, images =
             <ModelCarousel visible={isXl ? 5 : 3} items={models} />
           </Menu.Mega>
         ) : (
-          <Menu.Mega key={item.id} value={item.id} promo={{ ...item.promo, image: images[item.id] }}>
+          <Menu.Mega key={item.id} value={item.id} promo={{ ...item.promo, image: images[item.id] ?? item.promo.image }}>
             {item.sections.map((s) => (
               <Section key={s.title} section={s} />
             ))}

@@ -9,7 +9,7 @@ import { ChevronDownIcon, ChevronUpIcon } from '../atoms/SliderChevrons';
  * phones = everything centred. The text is clamped to 5 lines; the «Развернуть» toggle appears only when the text
  * really is longer and flips to «Свернуть».
  */
-export function ReviewCard({ name, rating, avatar, text, className }) {
+export function ReviewCard({ name, rating, avatar, text, onExpandedChange, className }) {
   const [open, setOpen] = React.useState(false);
   const [clamped, setClamped] = React.useState(false);
   const ref = React.useRef(null);
@@ -37,14 +37,17 @@ export function ReviewCard({ name, rating, avatar, text, className }) {
       </div>
 
       <div className="mt-3 text-center md:mt-3 md:pl-16 md:text-left">
-        <p ref={ref} className={cn('text-root font-light text-dacia-text-tertiary', !open && 'line-clamp-5')}>
+        <p ref={ref} className={cn('text-root font-light text-ink-13', !open && 'line-clamp-5')}>
           {text}
         </p>
         {(clamped || open) && (
           <button
             type="button"
             aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
+            onClick={() => {
+              onExpandedChange?.(!open);
+              setOpen((v) => !v);
+            }}
             className="mt-3 inline-flex items-center gap-1 text-small font-medium text-dacia-text-secondary transition-colors hover:text-dacia-dark-green focus:outline-none focus-visible:ring-2 focus-visible:ring-dacia-dark-green"
           >
             {open ? 'Свернуть' : 'Развернуть'}

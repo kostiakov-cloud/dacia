@@ -18,7 +18,7 @@ export const SearchField = React.forwardRef(({ placeholder = 'Что будем 
         type="search"
         name="q"
         placeholder={placeholder}
-        className="min-w-0 flex-1 bg-transparent text-[20px] font-light leading-8 text-dacia-text-secondary outline-none placeholder:text-ink-12 [&::-webkit-search-cancel-button]:hidden"
+        className="min-w-0 flex-1 bg-transparent text-[20px] font-light leading-8 text-dacia-text-secondary outline-none placeholder:text-ink-13 [&::-webkit-search-cancel-button]:hidden"
         {...props}
       />
     </label>

@@ -10,7 +10,7 @@ export function PriceBadge({ prefix = 'от', className, children }) {
         className
       )}
     >
-      {prefix && <span className="font-light text-dacia-text-tertiary">{prefix}</span>}
+      {prefix && <span className="font-light text-ink-13">{prefix}</span>}
       <span className="font-medium text-dacia-text-secondary">{children}</span>
     </span>
   );

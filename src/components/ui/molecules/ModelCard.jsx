@@ -9,9 +9,12 @@ import { ModelImage } from '../atoms/ModelImage';
  * appear on hover / keyboard focus (hover-capable devices only; touch layouts show the plain card).
  * Without `actions` it is the compact card of the mega-menu carousel.
  */
-export function ModelCard({ id, name, isNew, image, price, version, hybrid, href = '#', configHref = '#', actions = false, sizes, className }) {
+export function ModelCard({ id, name, isNew, image, price, version, hybrid, href: hrefProp, configHref: configProp, actions = false, imageClassName, mediaClassName, sizes, className, priceValue: _pv, eco: _eco, stats: _stats, ...rest }) {
+  const href = hrefProp ?? (id ? `/models/${id}` : '/models');
+  const configHref = configProp ?? (id ? `/models/${id}#versions` : '/models');
   return (
     <article
+      {...rest}
       className={cn(
         'group flex w-full flex-col items-center text-center',
         actions && 'rounded-cr2 px-4 py-3 transition-colors sm:p-4 duration-200 focus-within:bg-surface-03 hover:bg-surface-03',
@@ -22,25 +25,25 @@ export function ModelCard({ id, name, isNew, image, price, version, hybrid, href
         href={href}
         className="flex w-full flex-col items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-dacia-dark-green"
       >
-        <div className={cn('flex aspect-[16/9] w-full items-end justify-center', actions && !image && 'rounded-cr2 bg-surface-04')}>
+        <div className={cn('flex w-full items-end justify-center', mediaClassName || 'aspect-[16/9]', actions && !image && 'rounded-cr2 bg-surface-04')}>
           <ModelImage
             model={{ id, name, image }}
             sizes={sizes}
-            className={cn('object-contain transition-transform duration-300 group-hover:scale-[1.03]', actions ? 'max-h-[90%] max-w-[90%]' : 'max-h-full max-w-full')}
+            className={cn('object-contain transition-transform duration-300 group-hover:scale-[1.03]', imageClassName || (actions ? 'max-h-[90%] max-w-[90%]' : 'max-h-full max-w-full'))}
           />
         </div>
-        <div className="mt-3 flex h-5 items-end font-display text-hx6 font-bold uppercase tracking-wider text-dacia-text-secondary">
+        <div className={`mt-3 flex h-5 items-end text-hx6 font-bold uppercase tracking-wider text-dacia-text-secondary ${actions ? 'font-display' : 'font-block'}`}>
           {isNew && 'Новый'}
         </div>
-        <h3 className="font-display text-hx5 font-bold uppercase tracking-wider text-dacia-text-secondary">{name}</h3>
-        <p className="mt-2 text-small font-light text-dacia-text-tertiary">
+        <h3 className={`text-hx5 font-bold uppercase tracking-wider text-dacia-text-secondary ${actions ? 'font-display' : 'font-block'}`}>{name}</h3>
+        <p className="mt-2 text-small font-light text-ink-13">
           Цена от <span className="font-medium text-dacia-text-secondary">{price}</span>
         </p>
         <p className="text-caption font-light text-dacia-text-secondary">{version}</p>
         <div className="mt-2 flex h-5 items-center gap-2 text-tiny">
           {hybrid && (
             <>
-              <span className="font-light text-dacia-text-tertiary">Доступен:</span>
+              <span className="font-light text-ink-13">Доступен:</span>
               <span className="rounded-cr2 border border-dacia-orange px-1.5 font-medium text-dacia-orange">Полный гибрид</span>
             </>
           )}

@@ -14,31 +14,35 @@ export const services = [
     id: 'oil',
     title: 'Замена масла',
     text: 'Своевременная замена масла и фильтров продлевает срок службы двигателя и сохраняет его мощность.',
-    href: '#',
+    href: '/services#oil',
+    bookingHref: '/service-booking?service=oil',
     image: photo('oil'),
   },
   {
     id: 'tires',
     title: 'Проверка шин',
     text: 'Проверим износ и давление в шинах, чтобы обеспечить оптимальное сцепление с дорогой.',
-    href: '#',
+    href: '/services#tires',
+    bookingHref: '/service-booking?service=tires',
     image: photo('tires'),
   },
   {
     id: 'ac',
     title: 'Кондиционер',
     text: 'Диагностика и заправка кондиционера, чистка салонного фильтра: комфорт в любую погоду.',
-    href: '#',
+    href: '/services#ac',
+    bookingHref: '/service-booking?service=ac',
     image: photo('ac'),
   },
   {
     id: 'brakes',
     title: 'Тормоза',
     text: 'Проверка колодок, дисков и тормозной жидкости: ваша безопасность на дороге.',
-    href: '#',
+    href: '/services#brakes',
+    bookingHref: '/service-booking?service=brakes',
     image: photo('brakes'),
   },
 ];
 
-export const servicesCta = { label: 'Запись на техобслуживание', href: '#' };
+export const servicesCta = { label: 'Запись на техобслуживание', href: '/service-booking' };
 export const servicesButtonLabel = 'Записаться на ТО';

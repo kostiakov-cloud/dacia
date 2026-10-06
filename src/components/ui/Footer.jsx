@@ -1,6 +1,8 @@
 import React from 'react';
 import { cn } from './utils';
 import { Input } from './input';
+import { reveal } from '../../reveal';
+import { openConsentSettings } from '../../lib/consent';
 import lifebuoy from '../../assets/footer/lifebuoy.svg';
 import reload from '../../assets/footer/reload.svg';
 import shieldTick from '../../assets/footer/shield-tick.svg';
@@ -43,29 +45,30 @@ const defaultColumns = [
   {
     // first column: brand tagline + links (no heading)
     tagline: 'Откройте для себя марку Dacia',
+    taglineHref: '/about',
     links: [
-      { label: 'Контакты', href: '#' },
-      { label: 'Дилеры', href: '#' },
-      { label: 'Корпоративные продажи', href: '#' },
+      { label: 'Контакты', href: '/contacts' },
+      { label: 'Дилеры', href: '/dealers' },
+      { label: 'Корпоративные продажи', href: '/corporate' },
     ],
     logo: true,
   },
   {
     title: 'Пользователям Dacia',
     links: [
-      { label: 'Гарантия', href: '#' },
-      { label: 'Поддержка', href: '#' },
-      { label: 'Скачать цены', href: '#' },
-      { label: 'Новости', href: '#' },
+      { label: 'Гарантия', href: '/warranty' },
+      { label: 'Поддержка', href: '/faq' },
+      { label: 'Скачать цены', href: '/price-list' },
+      { label: 'Новости', href: '/news' },
     ],
   },
   {
     title: 'Автомобили Dacia',
     links: [
-      { label: 'Модельный ряд Dacia', href: '#' },
-      { label: 'Трейд-ин', href: '#' },
-      { label: 'Финансирование', href: '#' },
-      { label: 'Тест-драйв', href: '#' },
+      { label: 'Модельный ряд Dacia', href: '/models' },
+      { label: 'Трейд-ин', href: '/trade-in' },
+      { label: 'Финансирование', href: '/financing' },
+      { label: 'Тест-драйв', href: '/test-drive' },
     ],
   },
 ];
@@ -78,14 +81,14 @@ const defaultSocials = [
 ];
 
 const defaultLegal = [
-  { label: 'Обработка персональных данных', href: '#' },
-  { label: 'Юридическая информация', href: '#' },
-  { label: 'Cookies', href: '#' },
-  { label: 'Доступность', href: '#' },
+  { label: 'Обработка персональных данных', href: '/privacy' },
+  { label: 'Юридическая информация', href: '/legal' },
+  { label: 'Cookies', href: '#cookies', action: 'cookies' },
+  { label: 'Доступность', href: '/accessibility' },
 ];
 
 const linkClass =
-  'text-[14px] leading-[24px] text-alpha-l-80 transition-colors duration-200 hover:text-surface-01 focus:outline-none focus-visible:ring-2 focus-visible:ring-surface-01';
+  'text-[16px] font-light leading-[24px] text-alpha-l-80 transition-colors duration-200 hover:text-surface-01 focus:outline-none focus-visible:ring-2 focus-visible:ring-surface-01';
 
 /**
  * Footer — Dacia site footer.
@@ -132,8 +135,8 @@ export const Footer = React.forwardRef(({
       {benefits?.length > 0 && (
         <div className="border-t border-alpha-d-3 bg-surface-02">
           <ul className="mx-auto grid max-w-[1280px] grid-cols-1 gap-x-8 gap-y-8 px-4 py-10 sm:grid-cols-2 md:grid-cols-4 md:px-8 lg:py-12">
-            {benefits.map(({ icon: Icon, text }) => (
-              <li key={text} className="flex flex-col items-center gap-4 text-center">
+            {benefits.map(({ icon: Icon, text }, i) => (
+              <li key={text} {...reveal('up', (i % 4) * 90)} className="flex flex-col items-center gap-4 text-center">
                 <Icon size={40} className="shrink-0" />
                 <p className="max-w-[280px] text-[14px] font-medium leading-[28px] text-dacia-text-secondary">{text}</p>
               </li>
@@ -146,15 +149,15 @@ export const Footer = React.forwardRef(({
       <div className="bg-surface-20 text-surface-01">
         <div className="mx-auto grid max-w-[1280px] grid-cols-1 gap-x-8 gap-y-10 px-4 py-12 sm:grid-cols-2 md:px-8 lg:grid-cols-4 lg:py-20">
           {columns.map((col, i) => (
-            <div key={col.title || col.tagline || i} className="flex min-w-0 flex-col gap-4">
+            <div key={col.title || col.tagline || i} {...reveal('up', i * 90)} className="flex min-w-0 flex-col items-center gap-4 text-center md:items-start md:text-left">
               {col.logo && (
                 <a href="/" aria-label="Dacia" className="mb-2 block w-fit">
                   <img src={logoSign} alt="Dacia" width={57} height={16} />
                 </a>
               )}
               {col.title && <h3 className="text-[14px] font-medium leading-[24px] text-surface-01">{col.title}</h3>}
-              {col.tagline && <p className="text-[14px] leading-[24px] text-alpha-l-80">{col.tagline}</p>}
-              <ul className="flex flex-col gap-4">
+              {col.tagline && (col.taglineHref ? <a href={col.taglineHref} className={linkClass}>{col.tagline}</a> : <p className="text-[16px] font-light leading-[24px] text-alpha-l-80">{col.tagline}</p>)}
+              <ul className="flex flex-col items-center gap-4 md:items-start">
                 {col.links.map((l) => (
                   <li key={l.label}>
                     <a href={l.href} className={linkClass}>{l.label}</a>
@@ -165,7 +168,7 @@ export const Footer = React.forwardRef(({
           ))}
 
           {(sub || socials?.length > 0) && (
-            <div className="flex min-w-0 flex-col gap-4">
+            <div className="flex min-w-0 flex-col items-center gap-4 text-center md:items-start md:text-left">
               {sub && (
                 <>
                   <h3 className="text-[14px] font-medium leading-[24px] text-surface-01">{sub.title}</h3>
@@ -186,7 +189,7 @@ export const Footer = React.forwardRef(({
                 </>
               )}
               {socials?.length > 0 && (
-                <ul className="flex flex-wrap gap-2">
+                <ul className="flex flex-wrap justify-center gap-2 md:justify-start">
                   {socials.map(({ label, href, icon: Icon }) => (
                     <li key={label}>
                       <a
@@ -205,18 +208,24 @@ export const Footer = React.forwardRef(({
         </div>
       </div>
 
-      {/* 3. Legal bar */}
+      {/* 3. Legal bar: below xl two centred rows (links / divider / copyright), on desktop one row (links left, © right) */}
       <div className="bg-surface-02">
-        <div className="mx-auto flex max-w-[1280px] flex-col gap-3 px-4 py-4 text-[12px] leading-[16px] text-dacia-text-secondary sm:flex-row sm:items-center sm:justify-between md:px-8">
-          <ul className="flex flex-col items-center gap-2 sm:flex-row sm:flex-wrap sm:gap-y-2">
+        <div className="mx-auto max-w-[1280px] text-[14px] font-light leading-[24px] text-dacia-text-secondary xl:flex xl:items-center xl:justify-between xl:px-8 xl:py-4">
+          <ul className="flex flex-col items-center gap-3 px-4 py-8 md:flex-row md:flex-wrap md:justify-center md:gap-y-1 md:py-3.5 xl:justify-start xl:p-0">
             {legalLinks.map((l, i) => (
               <li key={l.label} className="flex items-center">
-                {i > 0 && <span aria-hidden className="mx-3 hidden h-3 w-px bg-alpha-d-20 sm:block" />}
-                <a href={l.href} className="transition-colors duration-200 hover:text-dacia-dark-green">{l.label}</a>
+                {i > 0 && <span aria-hidden className="mx-3 hidden h-3 w-px bg-alpha-d-20 md:block" />}
+                <a
+                  href={l.href}
+                  onClick={l.action === 'cookies' ? (e) => { e.preventDefault(); openConsentSettings(); } : undefined}
+                  className="transition-colors duration-200 hover:text-dacia-dark-green"
+                >
+                  {l.label}
+                </a>
               </li>
             ))}
           </ul>
-          <p className="text-center font-medium sm:text-right">{copyright}</p>
+          <p className="border-t border-alpha-d-3 py-3.5 text-center font-medium xl:border-0 xl:p-0 xl:text-right">{copyright}</p>
         </div>
       </div>
     </footer>

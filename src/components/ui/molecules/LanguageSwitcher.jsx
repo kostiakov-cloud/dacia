@@ -42,7 +42,7 @@ export const LanguageSwitcher = React.forwardRef(({
                 'whitespace-nowrap transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-dacia-dark-green',
                 selected
                   ? 'text-[14px] font-medium leading-[24px] text-dacia-text-secondary'
-                  : 'text-[16px] font-normal leading-[28px] text-dacia-text-tertiary hover:text-dacia-text-secondary'
+                  : 'text-[16px] font-normal leading-[28px] text-ink-13 hover:text-dacia-text-secondary'
               )}
             >
               {o.label}

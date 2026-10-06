@@ -12,9 +12,9 @@ const rise =
  * "Записаться на ТО" button. The whole tile stays one big link (the panel lets clicks through except the button),
  * so on touch screens a tap simply opens `href`.
  */
-export function ServiceTile({ title, text, href = '#', image, buttonLabel = 'Записаться на ТО', className }) {
+export function ServiceTile({ title, text, href = '#', bookingHref = '/service-booking', image, buttonLabel = 'Записаться на ТО', className, id: _id, ...rest }) {
   return (
-    <article className={cn('group relative isolate aspect-square overflow-hidden rounded-cr2 bg-ink-18 text-surface-01', className)}>
+    <article {...rest} className={cn('group relative isolate aspect-square overflow-hidden rounded-cr2 bg-ink-18 text-surface-01', className)}>
       {image ? (
         <img
           src={image.src}
@@ -33,9 +33,9 @@ export function ServiceTile({ title, text, href = '#', image, buttonLabel = 'З�
       {/* default state: centred title, the whole tile is the link. On hover it lifts and fades out. */}
       <a
         href={href}
-        className="absolute inset-0 flex items-end justify-center px-3 pb-8 pt-3 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-surface-01 md:px-5"
+        className="absolute inset-0 flex items-end justify-center px-2 pb-8 pt-3 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-surface-01 xl:px-5"
       >
-        <h3 className="font-block text-hs6 transition-[opacity,transform] duration-[450ms] ease-out group-focus-within:-translate-y-3 group-focus-within:opacity-0 group-hover:-translate-y-3 group-hover:opacity-0 md:text-h6">
+        <h3 className="whitespace-nowrap font-block text-hs6 transition-[opacity,transform] duration-[450ms] ease-out group-focus-within:-translate-y-3 group-focus-within:opacity-0 group-hover:-translate-y-3 group-hover:opacity-0 xl:text-h6">
           {title}
         </h3>
       </a>
@@ -50,10 +50,10 @@ export function ServiceTile({ title, text, href = '#', image, buttonLabel = 'З�
           'group-hover:bg-black/65 group-hover:opacity-100 group-hover:backdrop-blur-sm'
         )}
       >
-        <h3 className={cn(rise, 'delay-75 text-h6 font-block')}>{title}</h3>
+        <h3 className={cn(rise, 'delay-75 text-hs6 font-block xl:text-h6')}>{title}</h3>
         <p className={cn(rise, 'delay-150 text-small font-light')}>{text}</p>
         <div className={cn(rise, 'delay-[225ms] pointer-events-auto')}>
-          <OnDarkButton href={href} size="l" variant="solid" className="mt-1">
+          <OnDarkButton href={bookingHref} size="l" variant="solid" className="mt-1">
             {buttonLabel}
           </OnDarkButton>
         </div>

@@ -11,11 +11,11 @@ const focus = 'focus:outline-none focus-visible:ring-2 focus-visible:ring-dacia-
  * Controlled — the owner changes `model` in `onPrev` / `onNext`. `dir` (1 | -1) is the last direction,
  * used by the swap animation (.model-swap in index.css).
  */
-export function ModelPicker({ model, dir = 1, onPrev, onNext, label, className }) {
+export function ModelPicker({ model, dir = 1, onPrev, onNext, label, className, ...rest }) {
   const side = cn('absolute top-1/2 z-10 hidden size-10 -translate-y-1/2 items-center justify-center text-dacia-text-secondary transition-opacity hover:opacity-60 md:flex', focus);
   const vertical = cn('mx-auto flex size-8 shrink-0 items-center justify-center text-dacia-text-secondary transition-opacity hover:opacity-60 md:hidden', focus);
   return (
-    <div role="group" aria-label={label} className={cn('relative flex flex-col overflow-hidden rounded-cr2 bg-dacia-light-bg px-4 pb-6 pt-6 md:px-14 md:pb-6 md:pt-8', className)}>
+    <div {...rest} role="group" aria-label={label} className={cn('relative flex flex-col overflow-hidden rounded-cr2 bg-dacia-light-bg px-4 pb-6 pt-6 md:px-14 md:pb-6 md:pt-8', className)}>
       {/* tablet / desktop: side arrows */}
       <button type="button" aria-label={`${label}: предыдущая модель`} onClick={onPrev} className={cn(side, 'left-3')}>
         <ChevronLeftIcon size={24} />

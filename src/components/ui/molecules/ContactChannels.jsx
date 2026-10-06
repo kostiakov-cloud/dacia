@@ -14,7 +14,7 @@ export function ContactChannels({ title = 'Выберите способ свя�
   return (
     <div className={cn('flex flex-col items-center gap-6', className)}>
       {!hideTitle && (
-        <h2 data-mega-item className="font-display text-[20px] font-bold leading-8 text-dacia-text-secondary">
+        <h2 data-mega-item className="font-block text-h6 text-dacia-text-secondary">
           {title}
         </h2>
       )}

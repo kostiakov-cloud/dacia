@@ -105,3 +105,68 @@ html {
 }
 .model-swap { animation: model-swap-in 0.28s ease-out; }
 @media (prefers-reduced-motion: reduce) { .model-swap { animation: none; } }
+
+/* two-handle range slider: the inputs stack, only the thumbs take pointer events */
+.dual-range input[type='range'] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  appearance: none;
+  background: transparent;
+  pointer-events: none;
+}
+.dual-range input[type='range']::-webkit-slider-runnable-track { appearance: none; background: transparent; height: 100%; }
+.dual-range input[type='range']::-moz-range-track { background: transparent; height: 100%; }
+.dual-range input[type='range']::-webkit-slider-thumb {
+  appearance: none;
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  margin-top: 4px;
+  border-radius: 9999px;
+  border: 0;
+  background: #4e5844;
+  box-shadow: 0 0 0 4px rgba(78, 88, 68, 0.16);
+  cursor: grab;
+}
+.dual-range input[type='range']::-moz-range-thumb {
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  border: 0;
+  background: #4e5844;
+  box-shadow: 0 0 0 4px rgba(78, 88, 68, 0.16);
+  cursor: grab;
+}
+.dual-range input[type='range']:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 4px #fff, 0 0 0 6px #4e5844; }
+.dual-range input[type='range']:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 4px #fff, 0 0 0 6px #4e5844; }
+
+/* scroll reveal (src/reveal.js): hidden only while JS is running, plays when the element enters the viewport */
+html.reveal-ready [data-reveal]:not(.reveal-in) {
+  opacity: 0;
+  transform: var(--reveal-from, translate3d(0, 24px, 0));
+}
+html.reveal-ready [data-reveal='fade'] { --reveal-from: none; }
+html.reveal-ready [data-reveal='scale'] { --reveal-from: scale(0.94); }
+html.reveal-ready [data-reveal='left'] { --reveal-from: translate3d(-32px, 0, 0); }
+html.reveal-ready [data-reveal='right'] { --reveal-from: translate3d(32px, 0, 0); }
+html.reveal-ready [data-reveal].reveal-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.7s ease-out var(--reveal-delay, 0ms),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
+}
+
+/* anchors (#oil ...) scroll smoothly, but not for people who asked for reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+/* cookie dialog entrance */
+@keyframes consent-in { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: none; } }
+.consent-in { animation: consent-in 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+@media (prefers-reduced-motion: reduce) { .consent-in { animation: none; } }

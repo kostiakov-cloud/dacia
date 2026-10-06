@@ -19,7 +19,7 @@ export function cn(...inputs) {
  * Toggles:   Show Title / Show Label (`floatingLabel`) / Caption / Metric before & after
  *            (`before` / `after`) / Button (`action`) / Skroll + Scale (textarea).
  *
- * Tokens: text #232d3b, placeholder #8b96a6, caption #707c87, bg #fcfcfd,
+ * Tokens: text #232d3b, placeholder #697482 (Text Pale Blue/13), caption #707c87, bg #fcfcfd,
  * border rgba(0,0,0,.05), radius 2, success #70c039, button #4e5844.
  */
 const sizes = {
@@ -127,13 +127,13 @@ export const Input = React.forwardRef(({
 
   const control = cn(
     'min-w-0 flex-1 bg-transparent font-light text-[#232d3b] outline-none',
-    'placeholder:text-[#8b96a6] disabled:cursor-not-allowed'
+    'placeholder:text-ink-13 disabled:cursor-not-allowed'
   );
 
   const addon = (node, side) => (
     <div
       className={cn(
-        'flex min-w-[120px] shrink-0 items-center gap-2 self-stretch bg-[#fcfcfd] text-[14px] font-light leading-[24px] text-[#8b96a6]',
+        'flex min-w-[120px] shrink-0 items-center gap-2 self-stretch bg-[#fcfcfd] text-[14px] font-light leading-[24px] text-ink-13',
         s.px,
         side === 'before' ? 'border-r border-black/[0.02]' : 'border-l border-black/5'
       )}

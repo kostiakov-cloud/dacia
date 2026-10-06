@@ -1,14 +1,5 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
-
-// GSAP is only needed once a panel opens, so it is loaded lazily when the browser is idle.
-// Until it arrives panels simply appear without animation.
-let gsap = null;
-if (typeof window !== 'undefined') {
-  const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 200));
-  idle(() => import('gsap').then((m) => { gsap = m.default; }));
-}
-
 import { X } from 'lucide-react';
 import { cn } from '../utils';
 import { Logo } from '../atoms/Logo';
@@ -17,32 +8,24 @@ import { PhoneIcon, SearchIcon } from '../atoms/MenuIcons';
 import { LanguageSwitcher } from '../molecules/LanguageSwitcher';
 import { MegaPromo } from '../molecules/MegaPromo';
 
-/**
- * Menu — site header (Figma "Menu", node 27474:70015). Compound component:
- *
- *   <Menu value={page} onValueChange={setPage}>
- *     <Menu.Logo />
- *     <Menu.Nav>
- *       <Menu.Item value="models">Модели</Menu.Item>
- *       ...
- *       <Menu.Group>
- *         <Menu.Item icon={<PhoneIcon />} href="tel:022205860">022 205 860</Menu.Item>
- *         <Menu.Language />
- *         <Menu.Search />
- *       </Menu.Group>
- *     </Menu.Nav>
- *     <Menu.Actions><Menu.Cta>Запросить тест-драйв</Menu.Cta></Menu.Actions>
- *   </Menu>
- *
- * `floating` (default) = sticky bar, 16px from top/sides, 48px high; `floating={false}` = static 64px header.
- * `value` / `defaultValue` / `onValueChange` drive the selected (Active) item;
- * every part accepts `className` for customisation.
- *
- * Mega menu: give an item `panel="about"` and render `<Menu.Mega value="about" promo={...}>` with
- * `<MegaColumn>`s inside. Hovering the item (or clicking, with `trigger="click"`) opens the panel under the header; the page behind gets a
- * #000 30% + blur(20) backdrop. Esc / backdrop click / the X button close it.
- * `open` / `defaultOpen` / `onOpenChange` (panel id or null) make it controllable.
- */
+// GSAP is only needed once a panel opens, so it is fetched on the first sign of user intent (pointer / touch / key),
+// with a 4s idle fallback. Until it arrives panels simply appear without animation.
+let gsap = null;
+if (typeof window !== 'undefined') {
+  let started = false;
+  const events = ['pointermove', 'pointerdown', 'touchstart', 'keydown'];
+  const load = () => {
+    if (started) return;
+    started = true;
+    events.forEach((e) => window.removeEventListener(e, load));
+    import('gsap').then((m) => {
+      gsap = m.default;
+    });
+  };
+  events.forEach((e) => window.addEventListener(e, load, { passive: true, once: true }));
+  setTimeout(load, 4000);
+}
+
 const reduceMotion = () =>
   typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
@@ -78,7 +61,7 @@ function MenuOverlay({ open, onClose }) {
 
 const MenuContext = React.createContext({ value: undefined, select: () => {}, floating: true, open: null, setOpen: () => {}, hoverOut: () => {}, cancelClose: () => {}, isPinned: () => true });
 
-function MenuRoot({ value, defaultValue, onValueChange, open, defaultOpen = null, onOpenChange, floating = true, className, children, ...props }) {
+function MenuRoot({ value, defaultValue, onValueChange, open, defaultOpen = null, onOpenChange, floating = true, morph = false, className, children, ...props }) {
   const [inner, setInner] = React.useState(defaultValue);
   const current = value !== undefined ? value : inner;
   const [innerOpen, setInnerOpen] = React.useState(defaultOpen);
@@ -105,6 +88,24 @@ function MenuRoot({ value, defaultValue, onValueChange, open, defaultOpen = null
     }, 150);
   }, [open, onOpenChange, cancelClose]);
   React.useEffect(() => cancelClose, [cancelClose]);
+
+  // other components can ask the header to open a panel: openPanel('contact') (see src/panelBus.js)
+  React.useEffect(() => {
+    const onOpen = (e) => e.detail?.id && setOpen(e.detail.id, 'click');
+    window.addEventListener('app:open-panel', onOpen);
+    return () => window.removeEventListener('app:open-panel', onOpen);
+  }, [setOpen]);
+
+  // any page navigation (link click, Back / Forward) closes the open panel, the header itself stays mounted
+  React.useEffect(() => {
+    const close = () => setOpen(null);
+    window.addEventListener('app:navigate', close);
+    window.addEventListener('popstate', close);
+    return () => {
+      window.removeEventListener('app:navigate', close);
+      window.removeEventListener('popstate', close);
+    };
+  }, [setOpen]);
   const ctx = React.useMemo(
     () => ({
       floating,
@@ -126,11 +127,22 @@ function MenuRoot({ value, defaultValue, onValueChange, open, defaultOpen = null
     <MenuContext.Provider value={ctx}>
       <header
         className={cn(
-          'flex flex-wrap items-center justify-between gap-y-1 xl:flex-nowrap xl:gap-y-0',
-          floating
-            ? // sticky, 16px from top and sides, 48px high, translucent "Popup BG" token + blur
-              'sticky top-4 z-50 mx-4 h-12 rounded-[2px] bg-alpha-popup-bg pl-6 pr-0 backdrop-blur-md'
-            : 'relative z-50 w-full border-b border-alpha-d-3 bg-surface-01 px-6 py-3 max-xl:sticky max-xl:top-0 xl:px-8 xl:py-[18px]',
+          'flex flex-wrap items-center justify-between gap-y-1 xl:flex-nowrap xl:gap-x-6 xl:gap-y-0 min-[1440px]:gap-x-0',
+          morph
+            ? // From xl the bar is `fixed` in BOTH states and only its geometry / colours change, so the static -> floating
+              // switch is one smooth CSS transition (the page reserves the static height with a placeholder, see SiteHeader).
+              // Below xl it is the normal static / sticky bar.
+              cn(
+                'relative z-50 w-full border-b bg-surface-01 px-6 pt-3 max-xl:sticky max-xl:top-0',
+                'xl:fixed xl:w-auto xl:box-border xl:py-0 xl:transition-[top,left,right,height,padding,border-radius,background-color,border-color,backdrop-filter] xl:duration-[600ms] xl:ease-[cubic-bezier(0.16,1,0.3,1)]',
+                floating
+                  ? 'xl:left-4 xl:right-4 xl:top-4 xl:h-12 xl:rounded-[2px] xl:border-transparent xl:bg-alpha-popup-bg xl:pl-6 xl:pr-0 xl:backdrop-blur-md'
+                  : 'border-alpha-d-3 xl:inset-x-0 xl:top-0 xl:h-[81px] xl:rounded-none xl:px-8 xl:backdrop-blur-0'
+              )
+            : floating
+              ? // sticky, 16px from top and sides, 48px high, translucent "Popup BG" token + blur
+                'sticky top-4 z-50 mx-4 h-12 rounded-[2px] bg-alpha-popup-bg pl-6 pr-0 backdrop-blur-md'
+              : 'relative z-50 w-full border-b border-alpha-d-3 bg-surface-01 px-6 pt-3 max-xl:sticky max-xl:top-0 xl:px-8 xl:py-[18px]',
           // with an open mega panel the bar becomes opaque and merges with it
           currentOpen != null && 'rounded-b-none bg-surface-02 backdrop-blur-none',
           className
@@ -149,7 +161,7 @@ function MenuRoot({ value, defaultValue, onValueChange, open, defaultOpen = null
 /** Left slot (240px). Renders the Dacia logo by default. */
 function MenuLogo({ className, children, ...props }) {
   return (
-    <div className={cn('order-1 flex shrink-0 items-end xl:order-none xl:w-60', className)}>
+    <div className={cn('order-1 flex shrink-0 items-end xl:order-none xl:w-auto min-[1440px]:w-60', className)}>
       {children || <Logo {...props} />}
     </div>
   );
@@ -158,7 +170,7 @@ function MenuLogo({ className, children, ...props }) {
 /** Centre navigation (gap 28px). */
 function MenuNav({ className, children, ...props }) {
   return (
-    <nav className={cn('order-3 flex w-full items-center justify-center gap-7 rounded-[2px] py-1 xl:order-none xl:w-auto xl:py-2', className)} {...props}>
+    <nav className={cn('order-3 mt-3 flex w-[calc(100%+3rem)] -mx-6 items-center justify-center gap-7 border-t border-alpha-d-3 py-3 xl:gap-5 min-[1440px]:gap-7 xl:order-none xl:m-0 xl:w-auto xl:border-0 xl:py-2', className)} {...props}>
       {children}
     </nav>
   );
@@ -179,9 +191,11 @@ function MenuCenter({ className, children, ...props }) {
 
 /**
  * Item; `value` takes part in page selection, `panel` opens the mega panel with that id:
- * `trigger="hover"` (default) on pointer enter, `trigger="click"` on click only.
+ * `trigger="hover"` (default) on pointer enter, `trigger="click"` on click only; with `href` a mouse click navigates.
  */
-const MenuNavItem = React.forwardRef(({ value, panel, trigger = 'hover', onClick, onMouseEnter, active, ...props }, ref) => {
+const canHover = () => typeof window !== 'undefined' && window.matchMedia?.('(hover: hover)').matches;
+
+const MenuNavItem = React.forwardRef(({ value, panel, trigger = 'hover', href, onClick, onMouseEnter, active, ...props }, ref) => {
   const ctx = React.useContext(MenuContext);
   const hasPanel = panel !== undefined;
   const isOpen = hasPanel && ctx.open === panel;
@@ -197,9 +211,22 @@ const MenuNavItem = React.forwardRef(({ value, panel, trigger = 'hover', onClick
         onMouseEnter?.(e);
         if (hasPanel && trigger === 'hover' && !isOpen) ctx.setOpen(panel, 'hover');
       }}
+      href={href}
       onClick={(e) => {
         onClick?.(e);
         if (value !== undefined) ctx.select(value);
+        // An item with both `panel` and `href`: a mouse click follows the link (and closes the panel);
+        // on touch screens there is no hover, so the tap opens the panel instead and the link is not followed.
+        if (hasPanel && href) {
+          if (canHover()) ctx.setOpen(null);
+          else {
+            e.preventDefault();
+            // touch browsers fire an emulated hover right before the tap: pin the panel instead of closing it
+            if (isOpen && ctx.isPinned()) ctx.setOpen(null);
+            else ctx.setOpen(panel, 'click');
+          }
+          return;
+        }
         // a click pins a hover-opened panel; a second click closes it
         if (hasPanel) {
           if (isOpen && ctx.isPinned()) ctx.setOpen(null);
@@ -215,7 +242,7 @@ MenuNavItem.displayName = 'Menu.Item';
 /** Trailing cluster inside the nav: phone / language / search (pl 12, gap 32). */
 function MenuGroup({ className, children, ...props }) {
   return (
-    <div className={cn('order-2 ml-auto flex items-center gap-5 xl:order-none xl:ml-0 xl:gap-8 xl:pl-3', className)} {...props}>
+    <div className={cn('order-2 ml-auto flex items-center gap-5 xl:order-none xl:ml-0 xl:gap-5 xl:pl-3 min-[1440px]:gap-8', className)} {...props}>
       {children}
     </div>
   );
@@ -255,7 +282,7 @@ function MenuSearch({ className, icon, panel, onClick, ...props }) {
 function MenuActions({ className, children, ...props }) {
   const { floating } = React.useContext(MenuContext);
   return (
-    <div className={cn('order-2 ml-5 flex shrink-0 items-center justify-end gap-3 xl:order-none xl:ml-0 xl:w-60', floating && 'self-stretch', className)} {...props}>
+    <div className={cn('order-2 ml-5 flex shrink-0 items-center justify-end gap-3 xl:order-none xl:ml-0 xl:w-auto min-[1440px]:w-60', floating && 'self-stretch', className)} {...props}>
       {children}
     </div>
   );
@@ -271,8 +298,8 @@ const MenuCta = React.forwardRef(({ href, className, children, ...props }, ref) 
       href={href}
       {...(Comp === 'button' ? { type: 'button' } : {})}
       className={cn(
-        'inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-[2px] bg-dacia-dark-green px-6 py-2.5',
-        floating ? 'h-full' : 'h-10',
+        'inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-[2px] bg-dacia-dark-green px-6 py-2.5 transition-[height,opacity] duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)]',
+        floating ? 'h-12' : 'h-10',
         'text-[16px] font-medium leading-[28px] text-surface-01',
         'transition-opacity duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-dacia-dark-green focus-visible:ring-offset-2',
         className
@@ -316,6 +343,14 @@ function MenuMega({ value, promo, bare = false, label, className, children }) {
         el,
         { clipPath: 'inset(0 0 100% 0)', y: -10 },
         { clipPath: 'inset(0 0 0% 0)', y: 0, duration: 0.4 * d, ease: 'power3.out', clearProps: 'clipPath,transform' }
+      );
+      // the promo picture drives in from the lower right with a slight zoom-out, a beat after the card
+      const pics = el.querySelectorAll('[data-mega-image]');
+      gsap.killTweensOf(pics);
+      gsap.fromTo(
+        pics,
+        { x: 90, y: 40, scale: 1.12, opacity: 0, transformOrigin: '100% 100%' },
+        { x: 0, y: 0, scale: 1, opacity: 1, duration: 1 * d, delay: 0.18 * d, ease: 'power3.out', clearProps: 'transform,opacity' }
       );
       gsap.fromTo(
         items,

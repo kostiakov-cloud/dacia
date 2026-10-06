@@ -40,8 +40,8 @@ function Slide({ slide, index, count, priority }) {
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
 
       {/* Paddings: desktop 64 all round, tablet 24 sides / 32 bottom, mobile 16.
-          Below xl the bullets sit under the buttons, so the text block reserves 32 (bullets) + 16 (gap) at the bottom. */}
-      <div className="relative flex h-full flex-col items-center justify-end px-4 pb-16 text-center md:px-6 md:pb-20 xl:items-start xl:px-16 xl:pb-16 xl:text-left">
+          Below xl the bullets sit under the buttons, so the text block reserves the controls plus the gaps above / below them (phones 24 / 24, tablet 32 / 32). */}
+      <div className="relative flex h-full flex-col items-center justify-end px-4 pb-20 text-center md:px-6 md:pb-24 xl:items-start xl:px-16 xl:pb-16 xl:text-left">
         <Heading className="max-w-[640px] font-display text-[32px] font-bold leading-[1.15] text-surface-01 md:text-[44px] xl:text-[56px]">
           {slide.title}
         </Heading>
@@ -123,7 +123,7 @@ export function Hero({ slides = heroSlides, delay = 6000, className }) {
       </div>
 
       {/* bullets: centred under the buttons below xl, bottom-right (64px) on desktop */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center px-4 pb-4 md:px-6 md:pb-8 xl:justify-end xl:px-16 xl:pb-[72px]">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center px-4 pb-6 md:px-6 md:pb-8 xl:justify-end xl:px-16 xl:pb-[72px]">
         <SliderControls
           className="pointer-events-auto"
           size="l"

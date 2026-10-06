@@ -1,0 +1,38 @@
+# Netlify settings for the Dacia site (Vite + React single-page app).
+
+[build]
+  command = "npm run build"   # also runs the `prebuild` script that generates the design tokens
+  publish = "dist"            # Vite writes the finished site here
+
+[build.environment]
+  NODE_VERSION = "22"         # Vite 8 needs Node 20.19+ / 22.12+
+
+# The router lives in the browser: /ru/models/duster is not a real file.
+# Any path that is not a file is answered with index.html (status 200), and the app renders the page.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Files in /assets have a content hash in their name, so they can be cached "forever".
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Fonts and images keep their names when replaced, so a shorter cache.
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
